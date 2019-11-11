@@ -92,23 +92,23 @@ def preprocess_text(text):
 
 def loadGloveModel(gloveFile="../../glove.6B/glove.6B.300d.txt"):
     print("Loading Glove Model")
-    f = open(gloveFile,'r')
-    model = {}
-    for line in f:
-        splitLine = line.split()
-        word = splitLine[0]
-        embedding = np.array([float(val) for val in splitLine[1:]])
-        model[word] = embedding
-    print("Done.",len(model)," words loaded!")
+    import csv
+    model = pd.read_table(gloveFile, sep=" ", index_col=0, header=None, quoting=csv.QUOTE_NONE)
     return model
 
 def create_df_from_csv(input_file_paths):
 
-    if not os.path.exists("speeches_aligned"):
-        input_file_paths = remove_empty_df_from_list_dfs(input_file_paths)
-        _ = d6tstack.combine_csv.CombinerCSV(input_file_paths).to_csv_align("speeches_aligned/")
 
-    all_files = dd.read_csv(list_all_extension_files("./speeches_aligned"), dtype={'0': 'object',
+    input_file_paths = remove_empty_df_from_list_dfs(input_file_paths)
+    all_parents_directories = pd.Series(['/'.join(file.split("/")[:-1]) for file in input_file_paths]).unique()
+    for parent_dir in all_parents_directories:
+        tmp_input_file_paths = [file for file in input_file_paths if '/'.join(file.split("/")[:-1]).find(parent_dir)>=0]
+        if not os.path.exists(parent_dir.replace("speeches","speeches_aligned")):
+            _ = d6tstack.combine_csv.CombinerCSV(tmp_input_file_paths).to_csv_align(parent_dir.replace("speeches","speeches_aligned"))
+
+    _ = d6tstack.combine_csv.CombinerCSV(input_file_paths).to_csv_align("all_speeches_aligned")
+
+    all_files = dd.read_csv(list_all_extension_files("./all_speeches_aligned"), dtype={'0': 'object',
                                                                                    '1': 'object',
                                                                                    '2': 'object',
                                                                                    '3': 'object',
@@ -124,20 +124,30 @@ def create_df_from_csv(input_file_paths):
     all_files = all_files.apply('|NEW_SPEECH|'.join, axis=1).reset_index(drop=True).to_frame().rename(columns={0: 'speeches'})
     all_files['name'] = parse_names(info['name'])
     all_files = all_files.groupby(['name'])['speeches'].apply('|NEW_SPEECH|'.join).to_frame()
-    speeches_df = all_files['speeches'].apply(lambda x: x.split("|NEW_SPEECH|"), meta=('speeches', 'object')).compute()
-    prova_df = speeches_df
-    print(prova_df.iloc[0])
-    speeches_df = speeches_df.applymap(embed_speeches)
-    speeches_df = speeches_df.compute()
+    speeches_df = all_files['speeches'].apply(lambda x: x.split("|NEW_SPEECH|"), meta=('speeches', 'object')).to_frame()
+    if not os.path.exists("speeches_df.csv"):
+        speeches_df = speeches_df.compute()
+        speeches_df.to_csv("speeches_df.csv")
+    speeches_df = pd.read_csv("speeches_df.csv")
+    speeches_df = embed_speeches(speeches_df)
     return speeches_df
 
+def remove_out_of_vocab(model,speeches):
+    final = [str(' '.join([word for word in speech.split() if word in model.index])) for speech in speeches]
+    return final
+
+def embed_and_average_speeches(model,speeches, mean_speeches):
+    final = [[model.loc[word] for word in speech[0].split()] for speech in speeches]
+    final = [np.array(speech).mean(axis=0) for speech in final if len(speech)>0]
+    if mean_speeches:
+        final = np.array(final).mean(axis=0)
+    return final
 
 def embed_speeches(speeches, mean_speeches=True):
-    model = loadGloveModel()
-    embedded_speeches = [[model(word) for word in speech] for speech in speeches]
-    embedded_speeches = [np.mean(speech, axis=1) for speech in embedded_speeches]
-    if mean_speeches:
-        embedded_speeches = np.mean(embedded_speeches)
+    model = loadGloveModel("../../glove.840B.300d.txt")
+    speeches = speeches.groupby(['name'])['speeches'].apply(lambda x: remove_out_of_vocab(model, x)).reset_index()
+    embedded_speeches = speeches.groupby(['name'])['speeches'].apply(lambda x: embed_and_average_speeches(model, x, mean_speeches)).reset_index()
+
     return embedded_speeches
 
 
@@ -152,8 +162,13 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    if not os.path.exists("~/nltk_data"):
+        import nltk
+        nltk.download('wordnet')
+        nltk.download('stopwords')
+
     print(f"Starting analysis job for Path: {args.input_files_path}")
     speeches_df = create_df_from_csv(input_file_paths=list_all_extension_files(args.input_files_path))
-    embedded_speeches_df = embed_speeches(speeches_df=speeches_df)
+    speeches_df.to_csv("embedded_speeches.csv")
 
     print(f"Job finished. Analysis of path: {args.input_files_path} completed")
