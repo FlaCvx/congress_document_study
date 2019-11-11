@@ -8,6 +8,11 @@ import string
 import dask.dataframe as dd
 import d6tstack.combine_csv
 from pandas.io.common import EmptyDataError
+import nltk
+from nltk.tokenize import RegexpTokenizer
+from nltk.stem import WordNetLemmatizer
+from nltk.stem.porter import PorterStemmer
+from nltk.corpus import stopwords
 
 
 def remove_empty_df_from_list_dfs(input_file_paths):
@@ -53,16 +58,52 @@ def lower_case(text):
     return text
 
 
+def remove_stop_words(text):
+    """
+        import nltk
+        nltk.download('stopwords')
+
+    """
+    text = ' '.join([word for word in text.split() if word not in stopwords.words("english")])
+    return text
+
+
+def lemmatize_text(text):
+    #TODO: Scrivere da qualceh parte che bisogna fare questi comandi prima:
+    """
+        import nltk
+        nltk.download('wordnet')
+
+    """
+    lemmatizer = WordNetLemmatizer()
+    text = ' '.join([lemmatizer.lemmatize(i) for i in text.split()])
+    return text
+
+
 def preprocess_text(text):
-    #TODO Add stopwords removal etc!!!
+
     if text is not np.nan:
         text = remove_punctuations(text)
+        text = lemmatize_text(text)
+        text = remove_stop_words(text)
         text = lower_case(text)
     return text
 
 
+def loadGloveModel(gloveFile="../../glove.6B/glove.6B.300d.txt"):
+    print("Loading Glove Model")
+    f = open(gloveFile,'r')
+    model = {}
+    for line in f:
+        splitLine = line.split()
+        word = splitLine[0]
+        embedding = np.array([float(val) for val in splitLine[1:]])
+        model[word] = embedding
+    print("Done.",len(model)," words loaded!")
+    return model
+
 def create_df_from_csv(input_file_paths):
-    dict_centroids_speaker = {}
+
     if not os.path.exists("speeches_aligned"):
         input_file_paths = remove_empty_df_from_list_dfs(input_file_paths)
         _ = d6tstack.combine_csv.CombinerCSV(input_file_paths).to_csv_align("speeches_aligned/")
@@ -77,20 +118,28 @@ def create_df_from_csv(input_file_paths):
     for i in all_files.columns.values:
         all_files[i] = all_files[i].astype(str)
 
-    info = all_files[['name','filename','filepath']]
+    info = all_files[['name', 'filename', 'filepath']]
 
     all_files = all_files[all_files.columns.difference(['name', 'filename', 'filepath'])].applymap(preprocess_text)
     all_files = all_files.apply('|NEW_SPEECH|'.join, axis=1).reset_index(drop=True).to_frame().rename(columns={0: 'speeches'})
     all_files['name'] = parse_names(info['name'])
-    all_files = all_files.groupby(['name'])['speeches'].apply('|NEW_SPEECH|'.join)
+    all_files = all_files.groupby(['name'])['speeches'].apply('|NEW_SPEECH|'.join).to_frame()
     speeches_df = all_files['speeches'].apply(lambda x: x.split("|NEW_SPEECH|"), meta=('speeches', 'object')).compute()
-
+    prova_df = speeches_df
+    print(prova_df.iloc[0])
+    speeches_df = speeches_df.applymap(embed_speeches)
+    speeches_df = speeches_df.compute()
     return speeches_df
 
-def embed_speeches(speeches_df):
-    pass
 
-    return
+def embed_speeches(speeches, mean_speeches=True):
+    model = loadGloveModel()
+    embedded_speeches = [[model(word) for word in speech] for speech in speeches]
+    embedded_speeches = [np.mean(speech, axis=1) for speech in embedded_speeches]
+    if mean_speeches:
+        embedded_speeches = np.mean(embedded_speeches)
+    return embedded_speeches
+
 
 def cluster_speeches(speeches_df):
     pass
