@@ -3,10 +3,19 @@ data/1789to1824_DebatesAndProceedings/volumes/
 
 data/1789to1824_DebatesAndProceedings/hocrs_files/
 
-data/1789to1824_DebatesAndProceedings/one_column_volumes/
+data/1789to1824_DebatesAndProceedings/one_column_oriented/
 
 data/1789to1824_DebatesAndProceedings/text_volumes/
 
 data/1789to1824_DebatesAndProceedings/speeches/
 
 data/1789to1824_DebatesAndProceedings/speeches_aligned/
+
+data/1824to1837_DebatesAndProceedings/hocrs_files/
+
+data/1824to1837_DebatesAndProceedings/items/
+
+data/1833to1873_Debates andProceedings/congresses/
+
+#Ignore glove
+glove/

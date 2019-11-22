@@ -77,8 +77,8 @@ if __name__ == "__main__":
     files_paths = list_all_pngs_files(args.path_pngs)
 
     for file_path in files_paths:
-        new_directory = Path(file_path.replace("one_column_volumes","text_volumes")).parent
-        new_name = file_path.replace("one_column_volumes","text_volumes").replace("png","txt")
+        new_directory = Path(file_path.replace("one_column_oriented","text_volumes")).parent
+        new_name = file_path.replace("one_column_oriented","text_volumes").replace("png","txt")
         if not os.path.exists(new_name):
             if not os.path.exists(new_directory):
                 os.makedirs(new_directory)

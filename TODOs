@@ -1,0 +1,26 @@
+-dash (Python) for webapps. 
+-take the list of names and see their political side
+- Polarization of the speeches. Take bi-grams and train logistic regression to see if the speeches are polarized).
+- Vedi il paper che ha scritto nel google grant proposal
+
+
+-ocr first 50 pages of each volume. 
+- check how many images I can concatenate and ask for ocr in google cloud.
+
+
+---------------------------------------------------------------------------
+
+
+1- Max num of pages for ocr.
+--- 1st and 2nd datasets: 6 pages taken from "one_column_volume". There could be put more but the quality of the resulted text was very bad. The price to ocr the first two datasets is around 20$.
+
+-- The 3rd one has pages with a lower quality than the others, therefore it is better to put less imags.
+The third volume is immense, aroun 8 million pages. Credo che max si possa segmentare a due pagine alla volta, questo ridurrebbe le pagine a 4 milioni, e avrebbe il prezzo di 2000$
+
+
+TODO stasera: Il codice è scritto, bisogna runnarlo sui datasets uno e due. (Bisogna fare attenzione a riordinare il dataset).
+Insieme al codice per creare gli .hocr files.
+
+2- About the bi-grams polarization:
+TODOs: Leggere e capire il paper che esiste già e capire cosa devo fare.
+

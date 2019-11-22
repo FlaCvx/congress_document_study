@@ -5,7 +5,14 @@
     <bookmark url="file://$USER_HOME$/meteoswiss_weather_image_synthesis/data/__init__.py" description="dataset = data_loader.load_data()" line="57" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6b34589-6a46-46db-a59c-9b46a50fe546" name="Default" comment="" />
+    <list default="true" id="d6b34589-6a46-46db-a59c-9b46a50fe546" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Create_hocrs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/detect_text.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/detect_text.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/split_pages.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/split_pages.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,17 +22,51 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="analyze_speeches_tmp.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="analyze_speeches_tmp.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="92" column="10" selection-start-line="92" selection-start-column="10" selection-end-line="92" selection-end-column="10" />
+            <state relative-caret-position="2415">
+              <caret line="175" selection-start-line="175" selection-end-line="175" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <element signature="e#272#472#0" />
-                <element signature="e#542#923#0" />
-                <element signature="e#1092#1196#0" />
-                <element signature="e#1225#1297#0" />
+                <element signature="e#1578#1756#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="concat_multiple_images.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/concat_multiple_images.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="885">
+              <caret line="69" selection-start-line="69" selection-end-line="69" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Create_hocrs.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/data/Create_hocrs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="222">
+              <caret line="99" column="49" lean-forward="true" selection-start-line="99" selection-start-column="49" selection-end-line="99" selection-end-column="49" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="split_pages.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/split_pages.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1485">
+              <caret line="163" selection-start-line="163" selection-end-line="163" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#790#2381#0" />
+                <element signature="e#2440#3136#0" />
+                <element signature="e#3199#3324#0" />
+                <element signature="e#3422#4432#0" />
               </folding>
             </state>
           </provider>
@@ -35,8 +76,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="930">
-                <caret line="62" selection-start-line="62" selection-end-line="62" />
+              <first_editor relative-caret-position="525">
+                <caret line="35" column="23" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
               </first_editor>
               <second_editor />
             </state>
@@ -46,7 +87,7 @@
       <file leaf-file-name="segment_speeches.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/segment_speeches.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
+            <state relative-caret-position="1125">
               <caret line="95" column="48" selection-start-line="95" selection-start-column="30" selection-end-line="95" selection-end-column="48" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
@@ -57,52 +98,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="page_118.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/text_volumes/Volume_3/page_118.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="109">
-              <caret line="118" column="33" selection-start-line="118" selection-start-column="33" selection-end-line="118" selection-end-column="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="detect_text.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/detect_text.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1305">
-              <caret line="95" column="31" selection-start-line="95" selection-start-column="31" selection-end-line="95" selection-end-column="31" />
+            <state relative-caret-position="60">
+              <caret line="4" column="13" selection-start-line="4" selection-end-line="5" />
               <folding>
-                <element signature="e#0#9#0" expanded="true" />
+                <element signature="e#621#1701#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="split_pages.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/split_pages.py">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/google/cloud/vision_v1/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1710">
-              <caret line="203" column="42" selection-start-line="203" selection-start-column="42" selection-end-line="203" selection-end-column="42" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-                <element signature="e#790#2381#0" />
-                <element signature="e#2440#3136#0" />
-                <element signature="e#3199#3324#0" />
-                <element signature="e#3422#4432#0" />
-                <element signature="e#4658#5749#0" />
-              </folding>
+            <state relative-caret-position="315">
+              <caret line="29" column="53" selection-start-line="29" selection-start-column="53" selection-end-line="29" selection-end-column="53" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Create_hocrs.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Create_hocrs.py">
+      <file leaf-file-name="image_annotator_client.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/google/cloud/vision_v1/gapic/image_annotator_client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1050">
-              <caret line="73" column="31" selection-start-line="73" selection-start-column="31" selection-end-line="73" selection-end-column="31" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="360">
+              <caret line="43" column="6" selection-start-line="43" selection-start-column="6" selection-end-line="43" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -130,11 +151,17 @@
       <find>exec</find>
       <find>calculate_start_and_stop_occurences</find>
       <find>read_csv</find>
-      <find>volumes</find>
-      <find>basepath</find>
       <find>remove_empty_df_from_list_dfs</find>
       <find>stopwo</find>
+      <find>path_volume</find>
+      <find>volumes</find>
+      <find>basepath</find>
+      <find>path</find>
+      <find>new_image_path</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -143,69 +170,87 @@
         <option value="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Link" />
         <option value="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/split_pages.py" />
         <option value="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/pipeline_per_volume.py" />
-        <option value="$PROJECT_DIR$/data/Create_hocrs.py" />
         <option value="$PROJECT_DIR$/data/pipeline_per_volume.py" />
         <option value="$PROJECT_DIR$/analyze_speeches.py" />
         <option value="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Create_hocrs.py" />
-        <option value="$PROJECT_DIR$/data/split_pages.py" />
         <option value="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/detect_text.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/analyze_speeches_tmp.py" />
         <option value="$PROJECT_DIR$/segment_speeches.py" />
         <option value="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/text_volumes/Volume_3/page_118.txt" />
         <option value="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py" />
+        <option value="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/speeches/Volume_1/page_2.csv" />
+        <option value="$PROJECT_DIR$/concat_pages.py" />
+        <option value="$PROJECT_DIR$/concat_multiple_images.py" />
+        <option value="$PROJECT_DIR$/Create_hocrs.py" />
+        <option value="$PROJECT_DIR$/data/split_pages.py" />
+        <option value="$PROJECT_DIR$/data/Create_hocrs.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="40" />
-    <option name="y" value="-11" />
-    <option name="width" value="1327" />
-    <option name="height" value="780" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="703" />
+    <option name="y" value="24" />
+    <option name="width" value="663" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="Congress_Documents_Scraping" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Congress_Documents_Scraping" type="462c0819:PsiDirectoryNode" />
+              <item name="congress_document_study" type="b2602c69:ProjectViewProjectNode" />
+              <item name="congress_document_study" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Congress_Documents_Scraping" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Congress_Documents_Scraping" type="462c0819:PsiDirectoryNode" />
+              <item name="congress_document_study" type="b2602c69:ProjectViewProjectNode" />
+              <item name="congress_document_study" type="462c0819:PsiDirectoryNode" />
               <item name="data" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Congress_Documents_Scraping" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Congress_Documents_Scraping" type="462c0819:PsiDirectoryNode" />
+              <item name="congress_document_study" type="b2602c69:ProjectViewProjectNode" />
+              <item name="congress_document_study" type="462c0819:PsiDirectoryNode" />
               <item name="data" type="462c0819:PsiDirectoryNode" />
               <item name="1789to1824_DebatesAndProceedings" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="congress_document_study" type="b2602c69:ProjectViewProjectNode" />
+              <item name="congress_document_study" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="1824to1837_DebatesAndProceedings" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="congress_document_study" type="b2602c69:ProjectViewProjectNode" />
+              <item name="congress_document_study" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="1833to1873_Debates andProceedings" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/analyze_speeches.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/data/Create_hocrs.py" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data" />
+      <recent name="$PROJECT_DIR$/data/1833to1873_Debates andProceedings/congresses" />
       <recent name="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data/1824to1837_DebatesAndProceedings/items" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings" />
-      <recent name="$PROJECT_DIR$/data" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -220,7 +265,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.analyze_speeches_tmp">
+  <component name="RunManager" selected="Python.Create_hocrs">
     <configuration name="Create_hocrs" type="PythonConfigurationType" factoryName="Python">
       <module name="Congress_Documents_Scraping" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -229,12 +274,30 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Create_hocrs.py" />
-      <option name="PARAMETERS" value="--num_volume 8" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/Create_hocrs.py" />
+      <option name="PARAMETERS" value="--path_files ./1789to1824_DebatesAndProceedings/volumes/" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="Create_hocrs" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Congress_Documents_Scraping" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data/" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/Create_hocrs.py" />
+      <option name="PARAMETERS" value="--path_files ./1824to1837_DebatesAndProceedings/items" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -271,6 +334,24 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py" />
       <option name="PARAMETERS" value="--input_files_path ./speeches/Volume_3" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="concat_multiple_images" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Congress_Documents_Scraping" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/concat_multiple_images.py" />
+      <option name="PARAMETERS" value="--input_files_path ./data/1789to1824_DebatesAndProceedings/one_column_volumes/Volume_6 --num_pages 6" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -319,12 +400,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/split_pages.py" />
-      <option name="PARAMETERS" value="--num_volume 7" />
+      <option name="PARAMETERS" value="--hocr_paths ./1789to1824_DebatesAndProceedings/hocrs_files --page_type volumes" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -336,7 +417,14 @@
       <item itemvalue="Python.analyze_speeches" />
       <item itemvalue="Python.analyze_speeches_tmp" />
       <item itemvalue="Python.Create_hocrs" />
+      <item itemvalue="Python.concat_multiple_images" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.Create_hocrs" />
+        <item itemvalue="Python.concat_multiple_images" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -352,17 +440,18 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="40" y="-11" width="1327" height="780" extended-state="6" />
+    <frame x="41" y="-4" width="1325" height="772" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22264151" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32686567" />
-      <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.4791045" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32985073" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.4477612" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.3313433" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3641791" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -370,27 +459,8 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.32985073" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3283582" />
     </layout>
-    <layout-to-restore>
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.107169814" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.27761194" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.40597016" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Python Console" order="7" />
-    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -399,59 +469,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data/split_pages.py</url>
-          <line>205</line>
-          <option name="timeStamp" value="232" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/detect_text.py</url>
-          <line>29</line>
-          <option name="timeStamp" value="242" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/detect_text.py</url>
-          <line>31</line>
-          <option name="timeStamp" value="243" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/detect_text.py</url>
-          <line>32</line>
-          <option name="timeStamp" value="244" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/detect_text.py</url>
-          <line>34</line>
-          <option name="timeStamp" value="245" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/detect_text.py</url>
-          <line>36</line>
-          <option name="timeStamp" value="246" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/detect_text.py</url>
-          <line>38</line>
-          <option name="timeStamp" value="247" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/detect_text.py</url>
-          <line>39</line>
-          <option name="timeStamp" value="248" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/detect_text.py</url>
-          <line>40</line>
-          <option name="timeStamp" value="249" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/segment_speeches.py</url>
           <line>69</line>
           <option name="timeStamp" value="432" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Create_hocrs.py</url>
-          <line>74</line>
-          <option name="timeStamp" value="439" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analyze_speeches.py</url>
@@ -479,34 +499,74 @@
           <option name="timeStamp" value="477" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Create_hocrs.py</url>
-          <line>65</line>
-          <option name="timeStamp" value="500" />
+          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py</url>
+          <line>131</line>
+          <option name="timeStamp" value="604" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Create_hocrs.py</url>
-          <line>64</line>
-          <option name="timeStamp" value="501" />
+          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py</url>
+          <line>135</line>
+          <option name="timeStamp" value="611" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py</url>
+          <line>136</line>
+          <option name="timeStamp" value="612" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py</url>
+          <line>138</line>
+          <option name="timeStamp" value="616" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py</url>
+          <line>137</line>
+          <option name="timeStamp" value="617" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py</url>
+          <line>139</line>
+          <option name="timeStamp" value="618" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py</url>
+          <line>140</line>
+          <option name="timeStamp" value="619" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py</url>
+          <line>130</line>
+          <option name="timeStamp" value="623" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py</url>
+          <line>128</line>
+          <option name="timeStamp" value="624" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py</url>
+          <line>129</line>
+          <option name="timeStamp" value="625" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/concat_multiple_images.py</url>
+          <line>76</line>
+          <option name="timeStamp" value="651" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/concat_multiple_images.py</url>
+          <line>73</line>
+          <option name="timeStamp" value="674" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/concat_multiple_images.py</url>
+          <line>67</line>
+          <option name="timeStamp" value="675" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/data/split_pages.py</url>
-          <line>199</line>
-          <option name="timeStamp" value="513" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py</url>
-          <line>87</line>
-          <option name="timeStamp" value="577" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py</url>
-          <line>83</line>
-          <option name="timeStamp" value="586" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py</url>
-          <line>81</line>
-          <option name="timeStamp" value="587" />
+          <line>198</line>
+          <option name="timeStamp" value="723" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -519,7 +579,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="588" />
+      <option name="time" value="734" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -572,37 +632,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/segment_speeches.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="31" column="23" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <element signature="e#262#1001#0" />
-            <element signature="e#2399#2522#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/DataSet creation.ipynb" />
-    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Create_hocrs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" selection-end-line="1" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/1789to1824_DebatesAndProceedings.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -616,74 +645,11 @@
             <element signature="e#2440#3136#0" />
             <element signature="e#3199#3324#0" />
             <element signature="e#3422#4432#0" />
-            <element signature="e#4658#5749#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/detect_text.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" selection-start-line="11" selection-end-line="25" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/segment_speeches.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="23" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <element signature="e#262#1001#0" />
-            <element signature="e#2399#2522#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/DataSet creation.ipynb" />
-    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Create_hocrs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/1789to1824_DebatesAndProceedings.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/split_pages.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="14" selection-start-line="14" selection-end-line="28" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <element signature="e#790#2381#0" />
-            <element signature="e#2440#3136#0" />
-            <element signature="e#3199#3324#0" />
-            <element signature="e#3422#4432#0" />
-            <element signature="e#4658#5749#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Create_hocrs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Create_hocrs.py" />
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -697,7 +663,7 @@
         <state relative-caret-position="1335">
           <caret line="89" column="33" selection-start-line="89" selection-start-column="33" selection-end-line="89" selection-end-column="33" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#621#1701#0" />
           </folding>
         </state>
       </provider>
@@ -712,18 +678,11 @@
             <element signature="e#2440#3136#0" />
             <element signature="e#3199#3324#0" />
             <element signature="e#3422#4432#0" />
-            <element signature="e#4658#5749#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Create_hocrs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" lean-forward="true" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Create_hocrs.py" />
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -737,7 +696,7 @@
         <state relative-caret-position="795">
           <caret line="53" selection-start-line="53" selection-end-line="53" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#621#1701#0" />
           </folding>
         </state>
       </provider>
@@ -752,18 +711,11 @@
             <element signature="e#2440#3136#0" />
             <element signature="e#3199#3324#0" />
             <element signature="e#3422#4432#0" />
-            <element signature="e#4658#5749#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Create_hocrs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="35" column="27" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Create_hocrs.py" />
     <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Link" />
     <entry file="file://$PROJECT_DIR$/data/1824to1837_DebatesAndProceedings/Link" />
     <entry file="file://$PROJECT_DIR$/data/1833to1873_Debates andProceedings/Link" />
@@ -839,51 +791,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/split_pages.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1710">
-          <caret line="203" column="42" selection-start-line="203" selection-start-column="42" selection-end-line="203" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <element signature="e#790#2381#0" />
-            <element signature="e#2440#3136#0" />
-            <element signature="e#3199#3324#0" />
-            <element signature="e#3422#4432#0" />
-            <element signature="e#4658#5749#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Create_hocrs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1050">
-          <caret line="73" column="31" selection-start-line="73" selection-start-column="31" selection-end-line="73" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="930">
-            <caret line="62" selection-start-line="62" selection-end-line="62" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/detect_text.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1305">
-          <caret line="95" column="31" selection-start-line="95" selection-start-column="31" selection-end-line="95" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/speeches/Volume_3/page_376.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -904,27 +811,113 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/Create_hocrs.py" />
     <entry file="file://$PROJECT_DIR$/analyze_speeches.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="79" selection-start-line="79" selection-end-line="79" />
+        <state relative-caret-position="-756">
+          <caret line="7" selection-start-line="7" selection-end-line="12" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
             <element signature="e#1490#1562#0" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/emb.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/text_volumes/Volume_1/page_2.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="77" selection-start-line="22" selection-start-column="77" selection-end-line="22" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/speeches/Volume_1/page_2.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/speeches/Volume_1/page_1.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/embedded_speeches.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1995">
+          <caret line="77" column="3" selection-start-line="77" selection-start-column="3" selection-end-line="77" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/concat_pages.py" />
     <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/text_volumes/Volume_3/page_118.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
+        <state relative-caret-position="436">
           <caret line="118" column="33" selection-start-line="118" selection-start-column="33" selection-end-line="118" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/google/cloud/vision_v1/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="29" column="53" selection-start-line="29" selection-start-column="53" selection-end-line="29" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/google/cloud/vision_v1/gapic/image_annotator_client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="43" column="6" selection-start-line="43" selection-start-column="6" selection-end-line="43" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/detect_text.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="13" selection-start-line="4" selection-end-line="5" />
+          <folding>
+            <element signature="e#621#1701#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2415">
+          <caret line="175" selection-start-line="175" selection-end-line="175" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#1578#1756#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/credentials.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/concat_multiple_images.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="885">
+          <caret line="69" selection-start-line="69" selection-end-line="69" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="525">
+            <caret line="35" column="23" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/segment_speeches.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
+        <state relative-caret-position="1125">
           <caret line="95" column="48" selection-start-line="95" selection-start-column="30" selection-end-line="95" selection-end-column="48" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
@@ -934,17 +927,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/1789to1824_DebatesAndProceedings/analyze_speeches_tmp.py">
+    <entry file="file://$PROJECT_DIR$/data/split_pages.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="92" column="10" selection-start-line="92" selection-start-column="10" selection-end-line="92" selection-end-column="10" />
+        <state relative-caret-position="1485">
+          <caret line="163" selection-start-line="163" selection-end-line="163" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
-            <element signature="e#272#472#0" />
-            <element signature="e#542#923#0" />
-            <element signature="e#1092#1196#0" />
-            <element signature="e#1225#1297#0" />
+            <element signature="e#790#2381#0" />
+            <element signature="e#2440#3136#0" />
+            <element signature="e#3199#3324#0" />
+            <element signature="e#3422#4432#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/Create_hocrs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="99" column="49" lean-forward="true" selection-start-line="99" selection-start-column="49" selection-end-line="99" selection-end-column="49" />
         </state>
       </provider>
     </entry>

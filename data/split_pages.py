@@ -130,13 +130,11 @@ def find_num_cluster(threshold, approx_left_border, approx_right_border, page):
     else:
         raise ValueError('The number of cluster for page: '+str(page)+'was not uniquely found.')
 
-def rearrange_page(lines_split, up, bottom, num_columns, page):
-    original_file = Image.open(page)
+def rearrange_page(lines_split, up, bottom, num_columns, original_file, output_file):
+    original_file = Image.open(original_file)
 
-    p = Path(page)
-    new_image_path = str(p.parent).replace("volumes","one_column_volumes")
-    if not os.path.exists(new_image_path):
-        os.makedirs(new_image_path)
+    if not os.path.exists(Path(output_file).parent):
+        os.makedirs(Path(output_file).parent)
     if num_columns==2:
         # Cut the left page.
         middle_point = np.mean(lines_split[0])
@@ -158,15 +156,15 @@ def rearrange_page(lines_split, up, bottom, num_columns, page):
             new_im.paste(im, (0, y_offset))
             y_offset += im.size[1]
         #new_im.show()
-        new_im.save(os.path.join(new_image_path, p.stem+'.png'))
+        new_im.save(output_file)
     elif(num_columns==1):
-        original_file.save(os.path.join(new_image_path, p.stem+'.png'))
+        original_file.save(output_file)
     else:
         raise NotImplementedError
     return
 
 
-def split_pages(dir_path, default_path):
+def split_pages(hocr_paths, pages_type):
     """
     Algorithm based on a clustering technique.
 
@@ -177,17 +175,18 @@ def split_pages(dir_path, default_path):
     threshold=50
 
     bad_pages = []
-    hocr_files_paths = list_all_hocr_files(dir_path)
+    hocr_files_paths = list_all_hocr_files(hocr_paths)
 
-    for path in hocr_files_paths:
-        basepath = path.replace(".hocr","")
-        if not os.path.exists(path.replace(default_path,"one_column_volumes").replace(".hocr",".png")):
-            hocr_file = open(path, "r")
+    for hocr_path in hocr_files_paths:
+        original_image = hocr_path.replace(".hocr","").replace("hocrs_files",pages_type)
+        out_path = hocr_path.replace("hocrs_files","one_column_oriented").replace(".hocr",".png")
+        if not os.path.exists(out_path):
+            hocr_file = open(hocr_path, "r")
             soup = BeautifulSoup(hocr_file, 'html.parser')
             boxes, approx_left_border, approx_right_border = most_common_borders(soup=soup, num_occurrences=num_occurrences)
             try:
                 num_cluster=find_num_cluster(threshold=threshold, approx_left_border=approx_left_border,
-                                             approx_right_border=approx_right_border, page=basepath)
+                                             approx_right_border=approx_right_border, page=original_image)
 
                 left_borders, left_borders_ranges = find_borders_ranges(approx_left_border, num_cluster)
                 right_borders, right_borders_ranges = find_borders_ranges(approx_right_border, num_cluster)
@@ -196,14 +195,14 @@ def split_pages(dir_path, default_path):
                     lines_split, up, bottom = find_columns_split(boxes=boxes, columns_borders=columns_borders,
                                        left_borders_ranges=left_borders_ranges, right_borders_ranges=right_borders_ranges)
                 else:
-                    raise ValueError('The order of the columns border is not increasing in page: '+str(basepath))
+                    raise ValueError('The order of the columns border is not increasing in page: '+str(original_image))
                 rearrange_page(lines_split=lines_split, up=up, bottom=bottom, num_columns=num_cluster,
-                               page=basepath.replace("hocrs_files","volumes"))
-                print("Page " + str(Path(basepath).stem) + ", completed.")
+                               original_file=original_image, output_file=out_path)
+                print("Page " + out_path + ", completed.")
             except (ValueError, TypeError):
-                bad_pages.append(basepath)
+                bad_pages.append(original_image)
     print("The following pages could not be modified: ",bad_pages)
-    with open(dir_path+"/one_column_not_modified_pages.csv", 'w') as myfile:
+    with open(hocr_paths+"/one_column_not_modified_pages.csv", 'w') as myfile:
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         for element in bad_pages:
             wr.writerow([element])
@@ -213,15 +212,10 @@ def split_pages(dir_path, default_path):
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description='Extract .hocr files')
-    parser.add_argument('--num_volume', type=int, required=False, help='Number of the volume where to take the '
-                                                                       '.hocr files.')
-    default_path = "./hocrs_files"
+    parser = argparse.ArgumentParser(description='Splitting pages')
+    parser.add_argument('--hocr_paths', type=str, required=False, help='Path where to find .hocr files')
+    parser.add_argument('--page_type', type=str, required=False, help='"volumes", "items", "congresses')
 
     args = parser.parse_args()
 
-    if args.num_volume:
-        split_pages(os.path.join(default_path,"Volume_"+str(args.num_volume)), default_path=default_path)
-    else:
-        for volume_path in os.listdir(default_path):
-            split_pages(os.path.join(default_path,"Volume_"+volume_path), default_path=default_path)
+    split_pages(hocr_paths=args.hocr_paths, pages_type=args.page_type)
