@@ -65,6 +65,7 @@ def rearrange_page(lines_split, up, bottom, num_columns, original_file, output_f
 def split_pages_manually(image_path, splitting_point, save_imm=False):
     original_file = Image.open(image_path)
     if original_file.size[0]>600:
+        print(f"Splitting the page: {image_path}")
         if splitting_point is None:
             splitting_point=int(original_file.size[0]/2)
 
@@ -102,5 +103,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     for file in list_all_files(args.image_path):
-        print(f"Splitting the page: {file}")
         split_pages_manually(image_path=file, splitting_point=args.splitting_point, save_imm=args.save)
