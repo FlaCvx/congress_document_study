@@ -26,9 +26,10 @@ python <date1>to<date2>_DebatesAndProceedings.py
 ```
 
 #### 1.2 CREATION OF IMAGE FORMAT INFORMATION.
-Each of the three data subdirectories contain a "Create_hocrs.py" file, which uses the libray "tesseract" 
-to create the .hocr file of each image. This file will be used later to split the image, because it contains
-spacial information of each line of the page.
+In order to take spatial information of the lines of the document, we use a script called "Create_hocrs.py".
+This file uses the libray "tesseract" to create the .hocr file of each image. 
+The .hocr file given as output will be used later to split the image, because it contains
+spatial information of each line of the page.
 ```console
 python Create_hocrs.py
 ```
@@ -41,6 +42,14 @@ python split_pages.py
 ```
 Future improvement: This algorithm fails some times if the page is a little be inclined. Could be adjusted.  
 
+
+#### 1.4 CONCAT MULTIPLE IMAGES
+From now, all the steps MUST be run once all the previous steps are completed. At least once every
+subdirectory is completed, otherwise it will concatenate images and may skip others that are not yet available.. 
+
+```console
+python concat_multiple_images.py
+```
 
 #### 1.4 TEXT DETECTION
 For each file uses the Google Cloud Vision API to do an ocr and extract the text. The text

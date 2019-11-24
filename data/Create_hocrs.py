@@ -31,18 +31,6 @@ def list_all_files_hocr(directory_path):
                 files_paths.append(os.path.join(r,file))
     return files_paths
 
-def filter_pages_without_hocr(paths):
-    """
-    Removes from paths all the paths that have the hocr already. It returns a list of path for which the .hocr
-     needs to be created
-
-    :param paths:
-    :return:
-    """
-    input_pages = [fi for fi in paths if ((fi.find(".hocr") == -1)&(fi.find("one_column") == -1))]
-    output_pages = [fi.replace(".hocr","") for fi in paths if fi.find(".hocr") != -1]
-    return list(set(input_pages)-set(output_pages))
-
 
 def create_hocr(path, path_type):
     """
@@ -54,24 +42,27 @@ def create_hocr(path, path_type):
     :param path:
     :return:
     """
-    files_paths = list_all_files(path)
-    input_pages = filter_pages_without_hocr(files_paths)
+    input_pages = list_all_files(path)
 
     for input_page in input_pages:
-        try:
-            command = 'tesseract  ' + str(input_page) + ' ' + str(input_page) + ' -l eng hocr'
-            process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
-            output, error = process.communicate()
-            if not os.path.exists(str(input_page).replace(path_type, "hocrs_files").replace(input_page.split("/")[-1],"")):
-                os.makedirs(str(input_page).replace(path_type, "hocrs_files").replace(input_page.split("/")[-1],""))
-            shutil.move(str(input_page)+".hocr", str(input_page).replace(path_type, "hocrs_files") + ".hocr")
-            print("The file: \"%s\" has been created" % (str(input_page).replace(path_type, "hocrs_files") + ".hocr"))
+        out_dir = str(input_page).replace(path_type, "hocrs_files").replace(str(input_page).split("/")[-1], "")
+        out_name = str(input_page).replace(path_type, "hocrs_files") + ".hocr"
 
-        except KeyboardInterrupt:
-            if os.path.exists(str(input_page + '.hocr')):
-                print("Before the INTERRUPT, this file was being created: " + str(input_page + '.hocr'))
-                print("This file is now being deleted.")
-                os.remove(input_page + '.hocr')
+        if not os.path.exists(out_name):
+            try:
+                command = 'tesseract  ' + str(input_page) + ' ' + str(input_page) + ' -l eng hocr'
+                process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
+                output, error = process.communicate()
+                if not os.path.exists(out_dir):
+                    os.makedirs(out_dir)
+                shutil.move(str(input_page)+".hocr", out_name)
+                print("The file: \"%s\" has been created" % out_name)
+
+            except KeyboardInterrupt:
+                if os.path.exists(str(input_page + '.hocr')):
+                    print("Before the INTERRUPT, this file was being created: " + str(input_page + '.hocr'))
+                    print("This file is now being deleted.")
+                    os.remove(input_page + '.hocr')
 
     print("All the files of path: " + str(path.split("/")[-1]) + " have been created")
 

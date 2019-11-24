@@ -9,8 +9,10 @@ from PIL import Image
 from google.cloud import vision
 from google.cloud.vision import types
 import io
+from operator import itemgetter, attrgetter
 
-def list_all_extension_files(directory_path, extension='.txt'):
+
+def list_all_extension_files_and_sort(directory_path, extension='.txt'):
     """
 
     List all the files in the directory directory_path that have .txt as extension, check if the corresponding .csv file
@@ -24,56 +26,53 @@ def list_all_extension_files(directory_path, extension='.txt'):
         f = [os.path.join(r,file) for file in f if file.find(extension) != -1]
         files_paths.append(f)
 
-    files_paths = list(np.hstack(files_paths))
+    files_paths = [paths for paths in files_paths if len(paths)>0]
+    files_paths = [[tuple((path, int(path.replace(".png","").split("/")[-1].split("_")[-1]))) for path in paths] for paths in files_paths]
+    files_paths = [sorted(paths, key=itemgetter(1)) for paths in files_paths]
+    files_paths = [[path[0] for path in paths]for paths in files_paths]
+
+
     return files_paths
 
-def rearrange_page(input_file_paths, num_pages, try_double=False):
 
-    count = 0
-    input_paths = list_all_extension_files(input_file_paths, 'png')
-
-    input_paths = input_paths[:num_pages]
-    #TODO: Need to sort
-    images = []
-    for im_path in input_paths:
-        images.append(Image.open(im_path))
-
-    widths, heights = zip(*(i.size for i in images))
-    max_width = max(widths)
-    total_height = sum(heights)
-    if try_double:
-        new_im = Image.new('RGB', (2*max_width, total_height))
-    else:
-        new_im = Image.new('RGB', (max_width, total_height))
-    y_offset = 0
-    for im in images:
-        new_im.paste(im, (0, y_offset))
-        y_offset += im.size[1]
-
-    if try_double:
-        new_im.paste(new_im, (max_width, 0))
-
-    new_im.show()
-    path = os.path.join("/home/fla/Desktop/Research_Assistantship/congress_document_study/data/"
-                        "1789to1824_DebatesAndProceedings/scratch_dir", str(num_pages)+"_pages.png")
-    new_im.save(path)
-    print(f"Image dimensions: {new_im.size}")
-    print(f"Saved in: {path}")
+def rearrange_page(input_file_paths, num_pages):
 
 
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/fla/Desktop/Research_Assistantship/congress_document_study/data/credentials.json"  # Instantiates a client
-    client = vision.ImageAnnotatorClient()
+    all_directories_paths = list_all_extension_files_and_sort(input_file_paths, 'png')
 
-    # Loads the image into memory
-    with io.open(path, 'rb') as image_file:
-        content = image_file.read()
+    for dir_paths in all_directories_paths:
+        count = -1
+        output_directory = str(Path(dir_paths[0]).parent).replace("one_column_oriented", "concat_pages")
+        if not os.path.exists(output_directory):
+            os.makedirs(output_directory)
 
-    image = types.Image(content=content)
+        for i in range(0,len(dir_paths),num_pages):
+            count += 1
+            output_path = os.path.join(output_directory, "page_" + str(count) + ".png")
+            if not os.path.exists(output_path):
+                concat_pages_paths = dir_paths[i:i+num_pages]
+                images = []
+                for page_path in concat_pages_paths:
+                    try:
+                        images.append(Image.open(page_path))
+                    except:
+                        pass
+                widths, heights = zip(*(i.size for i in images))
+                max_width = max(widths)
+                total_height = sum(heights)
+                new_im = Image.new('RGB', (max_width, total_height))
+                y_offset = 0
+                for im in images:
+                    try:
+                        new_im.paste(im, (0, y_offset))
+                        y_offset += im.size[1]
+                    except:
+                        pass
+                #new_im.show()
 
-    # Performs text detection on the image file
-    response = client.text_detection(image=image)
-    texts = response.text_annotations
-    print(texts[0].description)
+
+                new_im.save(output_path)
+                print(f"Saved image: {output_path}")
     return
 
 
@@ -86,6 +85,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     initial_path = args.input_files_path
-    final_path = args.input_files_path.replace("text_volumes","speeches")
 
     rearrange_page(input_file_paths=args.input_files_path, num_pages=args.num_pages)
