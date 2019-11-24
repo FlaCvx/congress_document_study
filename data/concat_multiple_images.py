@@ -5,10 +5,7 @@ import pandas as pd
 import re
 from pathlib import Path
 from PIL import Image
-# Imports the Google Cloud client library
-from google.cloud import vision
-from google.cloud.vision import types
-import io
+
 from operator import itemgetter, attrgetter
 
 

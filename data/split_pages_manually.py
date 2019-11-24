@@ -103,4 +103,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     for file in list_all_files(args.image_path):
-        split_pages_manually(image_path=file, splitting_point=args.splitting_point, save_imm=args.save)
+        try:
+            split_pages_manually(image_path=file, splitting_point=args.splitting_point, save_imm=args.save)
+        except:
+            pass

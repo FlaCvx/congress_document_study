@@ -19,3 +19,6 @@ data/1833to1873_Debates andProceedings/congresses/
 
 #Ignore glove
 glove/
+
+#Ignore idea files
+.idea
