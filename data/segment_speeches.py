@@ -86,7 +86,7 @@ def segment(input_file_paths):
         if not os.path.exists(Path(output_file_path).parent):
             os.makedirs(Path(output_file_path).parent)
 
-        with open(input_file_path, 'r') as input_file:
+        with open(str(input_file_path), 'r') as input_file:
             loaded_text = input_file.read(-1)
             loaded_text = loaded_text.replace("-\n", "").replace("\n", " ")
             start_stop_indexes = calculate_start_and_stop_occurences(loaded_text)
@@ -105,22 +105,16 @@ def segment(input_file_paths):
             all_speakers.reset_index(drop=True).to_csv(path_or_buf=output_file_path, index=False)
 
 
-def load_congressmen_df(congressmen_csv_path):
-    congressmen_df = pd.read_csv(congressmen_csv_path)
-    return congressmen_df
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Segment file')
     parser.add_argument('--input_files_path', type=str, required=True, help='Directory containig the .txt files' )
-    parser.add_argument('--congressmen_csv', type=str, required=True, help='Directory containig the .csv file with the congressmen political info' )
 
     args = parser.parse_args()
 
     initial_path = args.input_files_path
     final_path = args.input_files_path.replace("text_volumes","speeches")
-
-    congressmen_df = load_congressmen_df(congressmen_csv_path=args.congressmen_csv)
 
     print(f"Starting segmentation job for Path: {initial_path}")
     segment(input_file_paths=args.input_files_path)
