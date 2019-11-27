@@ -45,10 +45,26 @@ def list_all_extension_files(directory_path, extension='.csv', remove_empty=Fals
     return files_paths
 
 
+def list_all_extension_files_per_directory(directory_path, extension='.csv'):
+    """
+
+    List all the files in the directory directory_path that have .csv as extension.
+    :param directory_path:
+    :return:
+    """
+    files_paths = []
+    for r, d, f in os.walk(directory_path):
+        f = [os.path.join(r, file) for file in f if file.find(extension) != -1]
+        if len(f) > 0:
+            files_paths.append(f)
+
+    return files_paths
+
+
 def parse_names(names):
     #TODO: Some names may be the same, but due to ocr they are written badly.
     names = names.str.lower().apply(remove_punctuations, meta=('name', 'object'))
-    return names
+    return 'mr ross'
 
 
 def remove_punctuations(text):
@@ -90,6 +106,9 @@ def preprocess_text(text):
         text = lemmatize_text(text)
         text = remove_stop_words(text)
         text = lower_case(text)
+        text = text.split()
+        text = list(ngrams(text, 2))
+
     return text
 
 
@@ -110,56 +129,60 @@ def create_df_from_csv(input_file_paths):
         _ = d6tstack.combine_csv.CombinerCSV(input_file_paths_allSubdirectories
                                              ).to_csv_align(dir_all_aligned)
 
-    out_speeches_df_dir = input_file_paths.replace("speeches", "all_grouped_speeches_df")
-    out_speeches_df = os.path.join(input_file_paths.replace("speeches", "all_grouped_speeches_df"), "speeches_df.csv")
-    if not os.path.exists(out_speeches_df):
-        all_files = dd.read_csv(list_all_extension_files(dir_all_aligned), dtype={'0': 'object', '1': 'object',
-                                                                                      '2': 'object', '3': 'object',
-                                                                                      '4': 'object', '5': 'object',
-                                                                                      '6': 'object', '7': 'object',
-                                                                                      '8': 'object', '9': 'object',
-                                                                                      '10': 'object', '11': 'object',
-                                                                                      '12': 'object', '13': 'object',
-                                                                                      '14': 'object', '15': 'object',
-                                                                                      '16': 'object', '17': 'object',
-                                                                                      '18': 'object', '19': 'object',
-                                                                                      '20': 'object', '21': 'object',
-                                                                                      '22': 'object', '23': 'object',
-                                                                                      '24': 'object', '25': 'object',
-                                                                                      '26': 'object', '27': 'object',
-                                                                                      '28': 'object', '29': 'object',
-                                                                                      '30': 'object', '31': 'object',
-                                                                                      '32': 'object', '33': 'object',
-                                                                                      '34': 'object', '35': 'object',
-                                                                                      '36': 'object', '37': 'object',
-                                                                                      '38': 'object', '39': 'object',
-                                                                                      '40': 'object', '41': 'object',
-                                                                                      '42': 'object', '43': 'object',
-                                                                                      '44': 'object', '45': 'object'})
+
+    all_aligned_speeches = list_all_extension_files_per_directory(dir_all_aligned)
+
+    for aligned_speeches in all_aligned_speeches:
+        all_files = dd.read_csv(aligned_speeches, dtype={'0': 'object', '1': 'object',
+                                                                                  '2': 'object', '3': 'object',
+                                                                                  '4': 'object', '5': 'object',
+                                                                                  '6': 'object', '7': 'object',
+                                                                                  '8': 'object', '9': 'object',
+                                                                                  '10': 'object', '11': 'object',
+                                                                                  '12': 'object', '13': 'object',
+                                                                                  '14': 'object', '15': 'object',
+                                                                                  '16': 'object', '17': 'object',
+                                                                                  '18': 'object', '19': 'object',
+                                                                                  '20': 'object', '21': 'object',
+                                                                                  '22': 'object', '23': 'object',
+                                                                                  '24': 'object', '25': 'object',
+                                                                                  '26': 'object', '27': 'object',
+                                                                                  '28': 'object', '29': 'object',
+                                                                                  '30': 'object', '31': 'object',
+                                                                                  '32': 'object', '33': 'object',
+                                                                                  '34': 'object', '35': 'object',
+                                                                                  '36': 'object', '37': 'object',
+                                                                                  '38': 'object', '39': 'object',
+                                                                                  '40': 'object', '41': 'object',
+                                                                                  '42': 'object', '43': 'object',
+                                                                                  '44': 'object', '45': 'object'})
 
         for i in all_files.columns.values:
             all_files[i] = all_files[i].astype(str)
 
         info = all_files[['name', 'filename', 'filepath']]
 
-        all_files = all_files[all_files.columns.difference(['name', 'filename', 'filepath'])].applymap(preprocess_text)
+        all_files = all_files[all_files.columns.difference(['name', 'filename', 'filepath'])].applymap(preprocess_text).compute()
 
-        #I need to do all these steps because otherwise it won't properly merge all the speeches for the same congressmen.
-        all_files = all_files.apply('|NEW_SPEECH|'.join,  meta=('speeches', 'object'),
-                                    axis=1).reset_index(drop=True).to_frame()
         all_files['name'] = parse_names(info['name'])
-        all_files = all_files.groupby(['name'])['speeches'].apply('|NEW_SPEECH|'.join,  meta=('speeches', 'object')).to_frame()
-        speeches_df = all_files['speeches'].apply(lambda x: x.split("|NEW_SPEECH|"), meta=('speeches', 'object')).to_frame()
+        c_all_speakers = {}
+        for speaker in all_files.name.unique():
+            tmp_speeches = pd.DataFrame(all_files[all_files.name==speaker][all_files.columns.difference(['name'])].values.reshape(1, -1))
+            c_speaker = {}
+            for col in tmp_speeches:
+                for tup in tmp_speeches[col][0]:
+                    if tup not in c_speaker.keys():
+                        c_speaker[tup] = 1
+                    else:
+                        c_speaker[tup] = c_speaker[tup]+1
+            c_all_speakers[speaker] = c_speaker
 
-        if not os.path.exists(out_speeches_df):
-            speeches_df = speeches_df.compute()
-            if not os.path.exists(out_speeches_df_dir):
-                os.makedirs(out_speeches_df_dir)
-            speeches_df.to_csv(out_speeches_df)
-    else:
-
-        speeches_df = pd.read_csv(out_speeches_df)
-
+        out_p = str(Path(aligned_speeches[0]).parent).replace("all_speeches_aligned","df_tuples")
+        if not os.path.exists(out_p):
+            os.makedirs(out_p)
+        file_out_p = os.path.join(out_p, "tuples_counts.csv")
+        print(f"Writing: {file_out_p}")
+        pd.DataFrame(c_all_speakers).to_csv(file_out_p)
     return speeches_df
 
 
