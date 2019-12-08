@@ -64,7 +64,7 @@ def list_all_extension_files_per_directory(directory_path, extension='.csv'):
 def parse_names(names):
     #TODO: Some names may be the same, but due to ocr they are written badly.
     names = names.str.lower().apply(remove_punctuations, meta=('name', 'object'))
-    return 'mr ross'
+    return names
 
 
 def remove_punctuations(text):
@@ -118,7 +118,8 @@ def loadGloveModel(gloveFile="../../glove.6B/glove.6B.300d.txt"):
     model = pd.read_table(gloveFile, sep=" ", index_col=0, header=None, quoting=csv.QUOTE_NONE)
     return model
 
-def create_df_from_csv(input_file_paths):
+
+def save_tuples_df(input_file_paths):
     dir_all_aligned = input_file_paths.replace("speeches","all_speeches_aligned")
 
     if not os.path.exists(dir_all_aligned):
@@ -131,59 +132,64 @@ def create_df_from_csv(input_file_paths):
 
 
     all_aligned_speeches = list_all_extension_files_per_directory(dir_all_aligned)
+    all_aligned_speeches = [element for element in all_aligned_speeches if len(element)>0]
 
     for aligned_speeches in all_aligned_speeches:
-        all_files = dd.read_csv(aligned_speeches, dtype={'0': 'object', '1': 'object',
-                                                                                  '2': 'object', '3': 'object',
-                                                                                  '4': 'object', '5': 'object',
-                                                                                  '6': 'object', '7': 'object',
-                                                                                  '8': 'object', '9': 'object',
-                                                                                  '10': 'object', '11': 'object',
-                                                                                  '12': 'object', '13': 'object',
-                                                                                  '14': 'object', '15': 'object',
-                                                                                  '16': 'object', '17': 'object',
-                                                                                  '18': 'object', '19': 'object',
-                                                                                  '20': 'object', '21': 'object',
-                                                                                  '22': 'object', '23': 'object',
-                                                                                  '24': 'object', '25': 'object',
-                                                                                  '26': 'object', '27': 'object',
-                                                                                  '28': 'object', '29': 'object',
-                                                                                  '30': 'object', '31': 'object',
-                                                                                  '32': 'object', '33': 'object',
-                                                                                  '34': 'object', '35': 'object',
-                                                                                  '36': 'object', '37': 'object',
-                                                                                  '38': 'object', '39': 'object',
-                                                                                  '40': 'object', '41': 'object',
-                                                                                  '42': 'object', '43': 'object',
-                                                                                  '44': 'object', '45': 'object'})
-
-        for i in all_files.columns.values:
-            all_files[i] = all_files[i].astype(str)
-
-        info = all_files[['name', 'filename', 'filepath']]
-
-        all_files = all_files[all_files.columns.difference(['name', 'filename', 'filepath'])].applymap(preprocess_text).compute()
-
-        all_files['name'] = parse_names(info['name'])
-        c_all_speakers = {}
-        for speaker in all_files.name.unique():
-            tmp_speeches = pd.DataFrame(all_files[all_files.name==speaker][all_files.columns.difference(['name'])].values.reshape(1, -1))
-            c_speaker = {}
-            for col in tmp_speeches:
-                for tup in tmp_speeches[col][0]:
-                    if tup not in c_speaker.keys():
-                        c_speaker[tup] = 1
-                    else:
-                        c_speaker[tup] = c_speaker[tup]+1
-            c_all_speakers[speaker] = c_speaker
-
-        out_p = str(Path(aligned_speeches[0]).parent).replace("all_speeches_aligned","df_tuples")
-        if not os.path.exists(out_p):
-            os.makedirs(out_p)
+        out_p = str(Path(aligned_speeches[0]).parent).replace("all_speeches_aligned", "df_tuples")
         file_out_p = os.path.join(out_p, "tuples_counts.csv")
-        print(f"Writing: {file_out_p}")
-        pd.DataFrame(c_all_speakers).to_csv(file_out_p)
-    return speeches_df
+        if not os.path.exists(file_out_p):
+            if not os.path.exists(out_p):
+                os.makedirs(out_p)
+            all_files = dd.read_csv(aligned_speeches, dtype={'0': 'object', '1': 'object',
+                                                                                      '2': 'object', '3': 'object',
+                                                                                      '4': 'object', '5': 'object',
+                                                                                      '6': 'object', '7': 'object',
+                                                                                      '8': 'object', '9': 'object',
+                                                                                      '10': 'object', '11': 'object',
+                                                                                      '12': 'object', '13': 'object',
+                                                                                      '14': 'object', '15': 'object',
+                                                                                      '16': 'object', '17': 'object',
+                                                                                      '18': 'object', '19': 'object',
+                                                                                      '20': 'object', '21': 'object',
+                                                                                      '22': 'object', '23': 'object',
+                                                                                      '24': 'object', '25': 'object',
+                                                                                      '26': 'object', '27': 'object',
+                                                                                      '28': 'object', '29': 'object',
+                                                                                      '30': 'object', '31': 'object',
+                                                                                      '32': 'object', '33': 'object',
+                                                                                      '34': 'object', '35': 'object',
+                                                                                      '36': 'object', '37': 'object',
+                                                                                      '38': 'object', '39': 'object',
+                                                                                      '40': 'object', '41': 'object',
+                                                                                      '42': 'object', '43': 'object',
+                                                                                      '44': 'object', '45': 'object'})
+
+            for i in all_files.columns.values:
+                all_files[i] = all_files[i].astype(str)
+
+            info = all_files[['name', 'filename', 'filepath']]
+
+            all_files = all_files[all_files.columns.difference(['name', 'filename', 'filepath'])].applymap(preprocess_text).compute()
+
+            all_files['name'] = parse_names(info['name'])
+            c_all_speakers = {}
+            for speaker in all_files.name.unique():
+                tmp_speeches = pd.DataFrame(all_files[all_files.name==speaker][all_files.columns.difference(['name'])].values.reshape(1, -1))
+                tmp_speeches = tmp_speeches.applymap(lambda x: np.nan if len(x)==0 else x)
+                tmp_speeches = tmp_speeches.dropna(axis=1).T.reset_index(drop=True).T
+                c_speaker = {}
+                for col in tmp_speeches:
+                    for tup in tmp_speeches[col][0]:
+                        if tup not in c_speaker.keys():
+                            c_speaker[tup] = 1
+                        else:
+                            c_speaker[tup] = c_speaker[tup]+1
+                c_all_speakers[speaker] = c_speaker
+
+
+            print(f"Writing: {file_out_p}")
+            pd.DataFrame(c_all_speakers).to_csv(file_out_p)
+    return
 
 
 def remove_out_of_vocab(model,speeches):
@@ -224,7 +230,7 @@ if __name__ == "__main__":
         nltk.download('stopwords')
 
     print(f"Starting bi-gram analysis for Path: {args.input_files_path}")
-    speeches_df = create_df_from_csv(input_file_paths=args.input_files_path)
+    save_tuples_df(input_file_paths=args.input_files_path)
 
 
     print(f"Job finished. Analysis of path: {args.input_files_path} completed")
