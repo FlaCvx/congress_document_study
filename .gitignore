@@ -5,20 +5,27 @@ data/*/hocrs_files/
 
 data/*/concat_pages/
 
-data/1789to1824_DebatesAndProceedings/one_column_oriented/
+data/*/one_column_oriented/
 
-data/1789to1824_DebatesAndProceedings/text_volumes/
+data/*/text_volumes/
 
-data/1789to1824_DebatesAndProceedings/speeches/
+data/*/speeches/
 
-data/1789to1824_DebatesAndProceedings/speeches_aligned/
+data/*/speeches_aligned/
 
-data/1824to1837_DebatesAndProceedings/items/
+data/*/df_tuples 
 
-data/1833to1873_Debates andProceedings/congresses/
+data/*/all_speeches_aligned
+
+data/*/items/
+
+data/*/congresses/
 
 #Ignore glove
 glove/
 
 #Ignore idea files
 .idea
+
+#Ignoring package cache
+data/d6tstack/__pycache__/*
