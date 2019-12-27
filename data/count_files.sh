@@ -12,10 +12,10 @@ subdir_two='Item_'
 end_one=42
 end_two=29
 
-default_path=${default_path_two}
-dir=${dir_two}
-subdir=${subdir_two}
-end=${end_two}
+default_path=${default_path_one}
+dir=${dir_one}
+subdir=${subdir_one}
+end=${end_one}
 
 
 echo "Main path: ${default_path}"

@@ -172,28 +172,3 @@ if __name__ == "__main__":
     speeches_df.to_csv("embedded_speeches.csv")
 
     print(f"Job finished. Analysis of path: {args.input_files_path} completed")
-
-
-def parse_speech(text):
-    if text is not np.nan:
-        text = text.replace("[", "").replace("\n", "").replace("]","")
-        text = [ float(num) for num in text.split()]
-    return text
-
-def transform_in_df(df_of_lists):
-    tmp = pd.DataFrame()
-    for ind in df_of_lists.index:
-        if df_of_lists.iloc[ind] is not np.nan:
-            tmp=tmp.append(pd.DataFrame(np.array(df_of_lists.iloc[ind]).reshape((1, 300))))
-        else:
-            tmp=tmp.append(pd.DataFrame())
-    return tmp
-
-def write_tsv(df):
-    import csv
-    f = open("emb.tsv", "w")
-    for ind in df.index:
-        f.write('\t'.join([str(value) for value in df.iloc[ind].values]))
-        f.write("\n")
-    f.close()
-    return
