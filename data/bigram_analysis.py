@@ -127,6 +127,7 @@ def loadGloveModel(gloveFile="../../glove.6B/glove.6B.300d.txt"):
 
 
 def save_tuples_df(input_file_paths):
+    # return "./1789to1824_DebatesAndProceedings/df_tuples/"
     dir_all_aligned = input_file_paths.replace("speeches","all_speeches_aligned")
 
     if not os.path.exists(dir_all_aligned):
@@ -358,9 +359,14 @@ class EstimatorSelectionHelper:
 
 def extract_data(input_file_paths, df_congressmen):
 
-    all_paths = list_all_extension_files_per_directory(directory_path=input_file_paths, extension='csv')
-    bigrams_count = dd.read_csv(all_paths).rename({"Unnamed: 0":"w0", "Unnamed: 1":"w1"}).compute()
-    bigrams_count = bigrams_count.reset_index()
+    all_paths = list(np.hstack(list_all_extension_files_per_directory(directory_path=input_file_paths, extension='csv')))
+
+    aligned_csvs = input_file_paths.replace("df_tuples","df_tuples_aligned")
+    if not os.path.exists(aligned_csvs):
+        _ = d6tstack.combine_csv.CombinerCSV(all_paths).to_csv_align(aligned_csvs)
+
+    bigrams_count = dd.read_csv(list(np.hstack(list_all_extension_files_per_directory(directory_path=aligned_csvs, extension='csv'))))
+    bigrams_count = bigrams_count.reset_index().rename({"Unnamed: 0":"w0", "Unnamed: 1":"w1"})
     bigrams_count = bigrams_count.fillna(0)
 
     congressmen = bigrams_count.columns.difference(["w0","w1"]).unique()

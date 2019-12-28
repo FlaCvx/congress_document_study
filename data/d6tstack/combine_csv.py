@@ -359,7 +359,7 @@ class CombinerCSV(object, metaclass=d6tcollect.Collect):
         df = _dfconact(df)
         return df
 
-    def _get_filepath_out(self, fname, output_dir, output_prefix, ext):
+    def _get_filepath_out(self, fname, output_dir, output_prefix, tuples, ext):
         # filename
         fname_out = ntpath.basename(fname)
         fname_out = os.path.splitext(fname_out)[0]
@@ -367,7 +367,10 @@ class CombinerCSV(object, metaclass=d6tcollect.Collect):
         #fname_out = output_prefix+'_'.join(fname[fname.find("speeches")+9:].split("/"))
         # path
         output_dir = output_dir if output_dir else os.path.dirname(fname)
-        output_dir = os.path.join(output_dir,'/'.join(fname[fname.find("speeches")+9:].split("/")[:-1]))
+        if tuples is not False:
+            output_dir = os.path.join(output_dir,'/'.join(fname[fname.find("speeches")+9:].split("/")[:-1]))
+        else:
+            output_dir = os.path.join(output_dir,'/'.join(fname[fname.find("df_tuples")+10:].split("/")[:-1]))
         fpath_out = os.path.join(output_dir, fname_out)
         assert _direxists(fpath_out, self.logger)
         return fpath_out
@@ -404,7 +407,7 @@ class CombinerCSV(object, metaclass=d6tcollect.Collect):
 
         return fnamesout
 
-    def to_csv_align(self, output_dir=None, output_prefix='d6tstack-', write_params={}):
+    def to_csv_align(self, output_dir=None, output_prefix='d6tstack-', tuples=False, write_params={}):
         """
         Create cleaned versions of original files. Automatically runs out of core, using `self.chunksize`.
 
@@ -422,7 +425,7 @@ class CombinerCSV(object, metaclass=d6tcollect.Collect):
 
         fnamesout = []
         for fname in self.fname_list:
-            filename = self._get_filepath_out(fname, output_dir, output_prefix, '.csv')
+            filename = self._get_filepath_out(fname, output_dir, output_prefix, tuples, '.csv')
             if self.logger:
                 self.logger.send_log('writing '+filename , 'ok')
             fhandle = open(filename, 'w')
