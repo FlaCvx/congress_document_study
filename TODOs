@@ -12,15 +12,17 @@
 
 
 1- Max num of pages for ocr.
---- 1st and 2nd datasets: 6 pages taken from "one_column_volume". There could be put more but the quality of the resulted text was very bad. The price to ocr the first two datasets is around 20$.
+--- 1st and 2nd datasets: 4 pages taken from "one_column_volume", still very good quality of results.
+The price to ocr the first two datasets was around 30$ (used from the free trial). DONE 
 
--- The 3rd one has pages with a lower quality than the others, therefore it is better to put less imags.
-The third volume is immense, aroun 8 million pages. Credo che max si possa segmentare a due pagine alla volta, questo ridurrebbe le pagine a 4 milioni, e avrebbe il prezzo di 2000$
+-- The 3rd dataset has pages with a lower quality than the others, therefore it is better to put less imags.
+The third volume is immense, aroun 8 million pages. Credo che max si possa segmentare a due pagine alla volta, questo ridurrebbe le pagine a 4 milioni, e avrebbe il prezzo di 1000$ (still have 250$ + could do other subscriptions)
 
 
-TODO stasera: Il codice è scritto, bisogna runnarlo sui datasets uno e due. (Bisogna fare attenzione a riordinare il dataset).
-Insieme al codice per creare gli .hocr files.
+2- 1789to1824 and 1824to1833 ocr and text extraction done.
 
-2- About the bi-grams polarization:
-TODOs: Leggere e capire il paper che esiste già e capire cosa devo fare.
-
+3- About the bi-grams polarization:
+3.1- speeches preprocessing: 1-Removal of punctuations. 2- drop a list of extremely common words. 3- reduce words to their stems
+3.2- bi-grams creation
+3.3- (phrases spoken at least 10 times in at least one session, spoken in at least 10 unique speaker-sessions, and spoken at least 100 times across all sessions )
+3.4- I do it for each x-years maybe one/two, I need to manually find them. 

@@ -15,6 +15,8 @@ data/*/speeches_aligned/
 
 data/*/df_tuples 
 
+data/*/df_tuples_aligned
+
 data/*/all_speeches_aligned
 
 data/*/items/

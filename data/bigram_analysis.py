@@ -127,7 +127,7 @@ def loadGloveModel(gloveFile="../../glove.6B/glove.6B.300d.txt"):
 
 
 def save_tuples_df(input_file_paths):
-    # return "./1789to1824_DebatesAndProceedings/df_tuples/"
+    return "./1789to1824_DebatesAndProceedings/df_tuples/"
     dir_all_aligned = input_file_paths.replace("speeches","all_speeches_aligned")
 
     if not os.path.exists(dir_all_aligned):
@@ -356,6 +356,24 @@ class EstimatorSelectionHelper:
 
         return df[columns]
 
+def match_congressmen(bigrams_count, df_congressmen):
+    congressmen_surnames = df_congressmen.bioname.str.split(",", expand=True)[0].str.lower().values
+    columns_congressmen = bigrams_count.columns.difference(["w0","w1"]).values
+    matches = [man for man in columns_congressmen if man.split("mr ")[-1] in congressmen_surnames]
+    matches = matches + ["w0","w1"]
+
+    bigrams_count = bigrams_count[matches]
+
+
+    return None, None
+
+
+def keep_common_bigrams(bigrams_count, threshold=1):
+    keep_not_rare_indexes = np.where(bigrams_count.sum(axis=1).values > threshold) #Remove tuples of w0,w1 used only by one congressmen
+    bigrams_count = bigrams_count.reset_index()
+    bigrams_count = bigrams_count[bigrams_count['index'].isin(keep_not_rare_indexes)]
+    return bigrams_count
+
 
 def extract_data(input_file_paths, df_congressmen):
 
@@ -366,17 +384,45 @@ def extract_data(input_file_paths, df_congressmen):
         _ = d6tstack.combine_csv.CombinerCSV(all_paths).to_csv_align(aligned_csvs)
 
     bigrams_count = dd.read_csv(list(np.hstack(list_all_extension_files_per_directory(directory_path=aligned_csvs, extension='csv'))))
-    bigrams_count = bigrams_count.reset_index().rename({"Unnamed: 0":"w0", "Unnamed: 1":"w1"})
+    bigrams_count = bigrams_count.drop(columns=["filename","filepath"])
+    bigrams_count = bigrams_count.reset_index(drop=True).rename(columns={"Unnamed: 0":"w0", "Unnamed: 1":"w1"})
     bigrams_count = bigrams_count.fillna(0)
 
-    congressmen = bigrams_count.columns.difference(["w0","w1"]).unique()
+    bigrams_count = keep_common_bigrams(bigrams_count=bigrams_count, threshold=1)
 
+    #TODO DEBUG
     bigrams_count = bigrams_count.groupby(["w0","w1"]).sum()
 
 
-    X = np.array()
-    y = np.array()
+    #Match congressmen
+    X, y = match_congressmen(bigrams_count, df_congressmen)
+
+    assert isinstance(X, np.array)
+    assert isinstance(y, np.array)
+
     return X, y
+
+
+def read_congressmen_info(congressmen_csv):
+
+    info_congressmen = pd.read_csv(congressmen_csv)
+    dict_parties = {5000:'Pro-Administration', 4000:'Anti-Administration', 1:'Federalist Party',
+                    13: 'Democratic-Republican Party', 1346: 'Jackson Democratic-Republican',
+                    8888: 'Adams-Clay Democratic-Republican', 6000: 'Crawford Federalist',
+                    7777: 'Crawford Democratic-Republican', 8000: 'Adams-Clay Federalist', 7000: 'Jackson Federalist',
+                    22: 'Anti-Jacksonian', 555: 'Jacksonian', 1275: 'Anti-Jacksonian', 26: 'Anti-Masonic',
+                    44:'Nullifier', 29: 'Whig', 100: 'Democratic', 328: 'Independent', 112: 'Conservative',
+                    329: 'Independent Democratic', 603: 'Independent Whig', 403: 'Law and Order', 310: 'American',
+                    1111: 'Liberty', 300: 'Free Soil', 4444: 'Unionist', 46: 'States\' Rights', 3333: 'Opposition',
+                    200: 'Republican', 3334: 'Opposition', 108: 'Anti-Lecompton Democratic', 206: 'Unionist',
+                    37: 'Constitutional Unionist', 203: 'Unconditional Unionist', 331: 'Independent Republican',
+                    1116: 'Conservative Republican', 208: 'Liberal Republican', 326: 'Greenback', 117: 'Democratic',
+                    114: 'Readjuster', 355: 'Labor', 356: 'Socialist Labor', 340: 'Populist', 1060: 'Silver',
+                    354: 'Silver Republican', 213: 'Democratic', 380: 'Socialist', 370: 'Progressive',
+                    347: 'Prohibitionist', 537: 'Farmer–Labor', 523: 'Republican', 522: 'American Labor',
+                    402: 'Liberal'}
+    info_congressmen['party_name'] = info_congressmen.party_code.apply(lambda x: dict_parties[x])
+    return info_congressmen
 
 
 if __name__ == "__main__":
@@ -398,7 +444,8 @@ if __name__ == "__main__":
     assert (output_path is not None)
 
     #Do here the division by sessions.
-    df_congressmen = pd.read_csv(args.congressmen_csv)
+
+    df_congressmen = read_congressmen_info(args.congressmen_csv)
     X, y = extract_data(input_file_paths=output_path, df_congressmen=df_congressmen)
 
     #Run gridSearch
