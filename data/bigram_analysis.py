@@ -360,9 +360,10 @@ def match_congressmen(bigrams_count, df_congressmen):
 
     #Create the surname to match those ones of the congressmen
     df_congressmen['match_surname'] = df_congressmen.bioname.str.split(",", expand=True)[0].str.lower().values
-    print("Congressmen surnames: ", df_congressmen['match_surname'])
 
     print(f"Shape of the original bigrams matrix: {bigrams_count.shape}")
+    print(f"Columns of the original bigrams matrix: {bigrams_count.columns}")
+
     #Filter only the columns of people in the df_congressmen dataframe, this will make the merge easier.
     columns_congressmen = bigrams_count.columns.difference(["w0","w1"]).values
     matches = [man for man in columns_congressmen if man.split("mr ")[-1] in df_congressmen.match_surname]
@@ -411,6 +412,7 @@ def extract_data(input_file_paths, df_congressmen):
     bigrams_count = keep_common_bigrams(bigrams_count=bigrams_count, threshold=1)
 
     bigrams_count = bigrams_count.groupby(["w0","w1"]).sum() #Sums the bigrams of the same congressmen
+    bigrams_count = bigrams_count.reset_index()
     # dd reads the csv by appending the new rows, if they have a column already, otherwise creates the column
     # therefore with this operation I count if the bigram is present elsewhere for the same congressmen
 
