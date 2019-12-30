@@ -369,9 +369,8 @@ def match_congressmen(bigrams_count, df_congressmen):
 
 
 def keep_common_bigrams(bigrams_count, threshold=1):
-    keep_not_rare_indexes = np.where(bigrams_count.sum(axis=1).values > threshold) #Remove tuples of w0,w1 used only by one congressmen
-    bigrams_count = bigrams_count.reset_index()
-    bigrams_count = bigrams_count[bigrams_count['index'].isin(keep_not_rare_indexes)]
+    keep_not_rare_indexes = np.where((bigrams_count.sum(axis=1).values) > threshold)[0] #Remove tuples of w0,w1 used only by one congressmen
+    bigrams_count = bigrams_count[bigrams_count.index.isin(keep_not_rare_indexes)]
     return bigrams_count
 
 
@@ -386,15 +385,15 @@ def extract_data(input_file_paths, df_congressmen):
     bigrams_count = dd.read_csv(list(np.hstack(list_all_extension_files_per_directory(directory_path=aligned_csvs, extension='csv'))))
     bigrams_count = bigrams_count.drop(columns=["filename","filepath"])
     bigrams_count = bigrams_count.reset_index(drop=True).rename(columns={"Unnamed: 0":"w0", "Unnamed: 1":"w1"})
-    bigrams_count = bigrams_count.fillna(0)
+    bigrams_count = bigrams_count.fillna(0).compute()
 
     bigrams_count = keep_common_bigrams(bigrams_count=bigrams_count, threshold=1)
 
     #TODO DEBUG
     bigrams_count = bigrams_count.groupby(["w0","w1"]).sum()
 
-
     #Match congressmen
+    return bigrams_count
     X, y = match_congressmen(bigrams_count, df_congressmen)
 
     assert isinstance(X, np.array)
