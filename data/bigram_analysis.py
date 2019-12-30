@@ -357,19 +357,29 @@ class EstimatorSelectionHelper:
         return df[columns]
 
 def match_congressmen(bigrams_count, df_congressmen):
-    congressmen_surnames = df_congressmen.bioname.str.split(",", expand=True)[0].str.lower().values
-    columns_congressmen = bigrams_count.columns.difference(["w0","w1"]).values
-    matches = [man for man in columns_congressmen if man.split("mr ")[-1] in congressmen_surnames]
-    matches = matches + ["w0","w1"]
 
+    #Create the surname to match those ones of the congressmen
+    df_congressmen['match_surname'] = df_congressmen.bioname.str.split(",", expand=True)[0].str.lower().values
+
+    #Filter only the columns of people in the df_congressmen dataframe, this will make the merge easier.
+    columns_congressmen = bigrams_count.columns.difference(["w0","w1"]).values
+    matches = [man for man in columns_congressmen if man.split("mr ")[-1] in df_congressmen.match_surname]
+    matches = matches + ["w0","w1"]
     bigrams_count = bigrams_count[matches]
 
+
+    #Create the match_surname column for te bigrmas dataframe as well
+    bigrams_count['match_surname'] = bigrams_count.index
+    bigrams_count['match_surname'] = bigrams_count.match_surname.str.split("mr ", expand=True)[1]
+
+    bigrams_count = bigrams_count.merge(df_congressmen[["match_surname","party_code"]], left_on='match_surname', right_on='match_surname')
+    #Could remove outliers
 
     return None, None
 
 
 def keep_common_bigrams(bigrams_count, threshold=1):
-    keep_not_rare_indexes = np.where(bigrams_count.sum(axis=1).values > threshold) #Remove tuples of w0,w1 used only by one congressmen
+    keep_not_rare_indexes = np.where(bigrams_count.sum(axis=1).values > threshold)[0] #Remove tuples of w0,w1 used only by one congressmen
     bigrams_count = bigrams_count.reset_index()
     bigrams_count = bigrams_count[bigrams_count['index'].isin(keep_not_rare_indexes)]
     return bigrams_count
@@ -390,8 +400,9 @@ def extract_data(input_file_paths, df_congressmen):
 
     bigrams_count = keep_common_bigrams(bigrams_count=bigrams_count, threshold=1)
 
-    #TODO DEBUG
-    bigrams_count = bigrams_count.groupby(["w0","w1"]).sum()
+    bigrams_count = bigrams_count.groupby(["w0","w1"]).sum() #Sums the bigrams of the same congressmen
+    # dd reads the csv by appending the new rows, if they have a column already, otherwise creates the column
+    # therefore with this operation I count if the bigram is present elsewhere for the same congressmen
 
 
     #Match congressmen
