@@ -31,3 +31,5 @@ glove/
 
 #Ignoring package cache
 data/d6tstack/__pycache__/*
+
+data/__pycache__/*

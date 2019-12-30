@@ -41,6 +41,10 @@ for i in `seq 1 1 ${end}`; do
   echo "Pages in /speeches/${subdir}${i}: ${c}"
   sum=$((sum+c))
 
+  c=$(find ${default_path}/df_tuples/${subdir}${i} -type f -name 'tuples_counts.csv' | wc -l)
+  echo "Pages in /df_tuples/${subdir}${i}: ${c}"
+  sum=$((sum+c))
+
   echo ""
 
 done
