@@ -361,26 +361,19 @@ def match_congressmen(bigrams_count, df_congressmen):
     #Create the surname to match those ones of the congressmen
     df_congressmen['match_surname'] = df_congressmen.bioname.str.split(",", expand=True)[0].str.lower().values
 
-    print(f"Shape of the original bigrams matrix: {bigrams_count.shape}")
-    print(f"Columns of the original bigrams matrix: {bigrams_count.columns}")
-
     #Filter only the columns of people in the df_congressmen dataframe, this will make the merge easier.
     columns_congressmen = bigrams_count.columns.difference(["w0","w1"]).values
     matches = [man for man in columns_congressmen if man.split("mr ")[-1] in df_congressmen.match_surname]
     matches = matches + ["w0","w1"]
+    print(f"Len of matches: {len(matches)}")
     bigrams_count = bigrams_count[matches]
-    print(f"Shape of the filtered bigrams matrix: {bigrams_count.shape}")
 
-    print("Original: ", bigrams_count.head())
     #Create the match_surname column for te bigrmas dataframe as well
     bigrams_count = bigrams_count.T
-    print("Transposed: ", bigrams_count.head())
     bigrams_count['match_surname'] = bigrams_count.index
     bigrams_count['match_surname'] = bigrams_count.match_surname.str.split("mr ", expand=True)[1]
-    print("Matched surnames: ", bigrams_count.head())
 
     bigrams_count = bigrams_count.merge(df_congressmen[["match_surname","party_code"]], left_on='match_surname', right_on='match_surname')
-    print("Merged: ", bigrams_count.head())
     #Could remove outliers
 
     X = bigrams_count[[bigrams_count.columns.difference(["match_surname","party_code"])]].values
