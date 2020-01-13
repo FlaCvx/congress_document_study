@@ -363,13 +363,15 @@ def match_congressmen(bigrams_count, df_congressmen):
 
     #Filter only the columns of people in the df_congressmen dataframe, this will make the merge easier.
     columns_congressmen = bigrams_count.columns.difference(["w0","w1"]).values
-    matches = [man for man in columns_congressmen if man.split("mr ")[-1] in df_congressmen.match_surname]
+    matches = [man for man in columns_congressmen if man.split("mr ")[-1] in df_congressmen.match_surname.values]
     matches = matches + ["w0","w1"]
-    print(f"Len of matches: {len(matches)}")
+    #print(f"Matches: {matches}")
     bigrams_count = bigrams_count[matches]
+    #print(f"Columns: {bigrams_count.columns}")
 
     #Create the match_surname column for te bigrmas dataframe as well
     bigrams_count = bigrams_count.T
+    print(f"Indexes: {bigrams_count.index}")
     bigrams_count['match_surname'] = bigrams_count.index
     bigrams_count['match_surname'] = bigrams_count.match_surname.str.split("mr ", expand=True)[1]
 
