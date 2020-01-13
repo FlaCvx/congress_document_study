@@ -365,7 +365,6 @@ def match_congressmen(bigrams_count, df_congressmen):
     columns_congressmen = bigrams_count.columns.difference(["w0","w1"]).values
     matches = [man for man in columns_congressmen if man.split("mr ")[-1] in df_congressmen.match_surname.values]
     matches = matches + ["w0","w1"]
-    #print(f"Matches: {matches}")
     bigrams_count = bigrams_count[matches]
     #print(f"Columns: {bigrams_count.columns}")
 
