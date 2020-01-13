@@ -127,7 +127,7 @@ def loadGloveModel(gloveFile="../../glove.6B/glove.6B.300d.txt"):
 
 
 def save_tuples_df(input_file_paths):
-    return "./1789to1824_DebatesAndProceedings/df_tuples/"
+    #return "./1789to1824_DebatesAndProceedings/df_tuples/"
     dir_all_aligned = input_file_paths.replace("speeches","all_speeches_aligned")
 
     if not os.path.exists(dir_all_aligned):
@@ -199,7 +199,7 @@ def save_tuples_df(input_file_paths):
                 print(f"Writing: {file_out_p}")
                 pd.DataFrame(c_all_speakers).to_csv(file_out_p)
 
-        return out_p
+        return input_file_paths.replace("speeches","df_tuples")
 
 
 def remove_out_of_vocab(model,speeches):
@@ -227,7 +227,7 @@ def cluster_speeches(speeches_df):
     pass
 
 
-def analysis(X, y):
+def analysis_GridSearch(X, y):
     print(__doc__)
 
     # build a classifier
@@ -266,7 +266,7 @@ def analysis(X, y):
     # use a full grid over all parameters
     param_grid = {"max_depth": [3, None],
                   "max_features": [1, 3, 10, 20, 30],
-                  "min_samples_split": [1, 3, 10],
+                  "min_samples_split": [3, 10],
                   "min_samples_leaf": [1, 3, 10],
                   "bootstrap": [True, False],
                   "criterion": ["gini", "entropy"]}
@@ -280,8 +280,9 @@ def analysis(X, y):
           % (time() - start, len(grid_search.grid_scores_)))
     report(grid_search.grid_scores_)
 
+
 def analysis(X, y):
-    estimator = EstimatorSelectionHelper()
+
     models = {
         # 'ExtraTreesClassifier': ExtraTreesClassifier(),
         'SVC': SVC(),
@@ -296,9 +297,15 @@ def analysis(X, y):
         ]
     }
     helper = EstimatorSelectionHelper(models, params)
-    helper.fit(X, y, scoring='accuracy', n_jobs=2)
-    helper.score_summary(sort_by='mean_score')
 
+    from sklearn.datasets import load_iris
+    from sklearn.feature_selection import SelectKBest
+    from sklearn.feature_selection import chi2
+
+    X_new = SelectKBest(chi2, k=100).fit_transform(X, y)
+
+    helper.fit(X_new, y, scoring='accuracy', n_jobs=2)
+    helper.score_summary(sort_by='mean_score')
 
 
 class EstimatorSelectionHelper:
@@ -370,14 +377,14 @@ def match_congressmen(bigrams_count, df_congressmen):
 
     #Create the match_surname column for te bigrmas dataframe as well
     bigrams_count = bigrams_count.T
-    print(f"Indexes: {bigrams_count.index}")
+    #print(f"Indexes: {bigrams_count.index}")
     bigrams_count['match_surname'] = bigrams_count.index
     bigrams_count['match_surname'] = bigrams_count.match_surname.str.split("mr ", expand=True)[1]
 
     bigrams_count = bigrams_count.merge(df_congressmen[["match_surname","party_code"]], left_on='match_surname', right_on='match_surname')
     #Could remove outliers
 
-    X = bigrams_count[[bigrams_count.columns.difference(["match_surname","party_code"])]].values
+    X = bigrams_count[bigrams_count.columns.difference(["match_surname","party_code"])].values
     y = bigrams_count.party_code.values
     return X,y
 
@@ -393,17 +400,20 @@ def keep_common_bigrams(bigrams_count, threshold=1):
 def extract_data(input_file_paths, df_congressmen):
 
     all_paths = list(np.hstack(list_all_extension_files_per_directory(directory_path=input_file_paths, extension='csv')))
-
     aligned_csvs = input_file_paths.replace("df_tuples","df_tuples_aligned")
-    if not os.path.exists(aligned_csvs):
-        _ = d6tstack.combine_csv.CombinerCSV(all_paths).to_csv_align(aligned_csvs)
 
-    bigrams_count = dd.read_csv(list(np.hstack(list_all_extension_files_per_directory(directory_path=aligned_csvs, extension='csv'))))
-    bigrams_count = bigrams_count.drop(columns=["filename","filepath"])
+    # all_paths_aligned = list_all_extension_files_per_directory(directory_path=aligned_csvs, extension='csv')
+    # all_paths_aligned = list(np.hstack(all_paths_aligned)) if len(all_paths_aligned)>0 else []
+    # if not os.path.exists(aligned_csvs) or len(all_paths_aligned)!=len(all_paths):
+    #     _ = d6tstack.combine_csv.CombinerCSV(all_paths).to_csv_align(aligned_csvs)
+
+    bigrams_count = dd.read_csv(all_paths[0])
+    #bigrams_count = bigrams_count.drop(columns=["filename","filepath"])
     bigrams_count = bigrams_count.reset_index(drop=True).rename(columns={"Unnamed: 0":"w0", "Unnamed: 1":"w1"})
     bigrams_count = bigrams_count.fillna(0).compute()
 
     bigrams_count = keep_common_bigrams(bigrams_count=bigrams_count, threshold=1)
+    #TODO: Plot the histogram of occurrences of the bigrams. Then decide the threshold
 
     bigrams_count = bigrams_count.groupby(["w0","w1"]).sum() #Sums the bigrams of the same congressmen
     bigrams_count = bigrams_count.reset_index()
@@ -413,9 +423,9 @@ def extract_data(input_file_paths, df_congressmen):
     #Match congressmen
     X, y = match_congressmen(bigrams_count, df_congressmen)
 
-    assert isinstance(X, np.array)
-    assert isinstance(y, np.array)
-
+    assert isinstance(X, np.ndarray)
+    assert isinstance(y, np.ndarray)
+    assert X.shape[0]==y.shape[0]
     return X, y
 
 
@@ -456,7 +466,6 @@ if __name__ == "__main__":
 
     print(f"Starting bi-gram analysis for Path: {args.input_files_path}")
     output_path = save_tuples_df(input_file_paths=args.input_files_path)
-
     assert (output_path is not None)
 
     #Do here the division by sessions.
@@ -465,6 +474,9 @@ if __name__ == "__main__":
     X, y = extract_data(input_file_paths=output_path, df_congressmen=df_congressmen)
 
     #Run gridSearch
+    #analysis_GridSearch(X, y)
+
     analysis(X, y)
 
     print(f"Job finished. Analysis of path: {args.input_files_path} completed")
+
