@@ -637,7 +637,7 @@ if __name__ == "__main__":
 
         congresses_files = group_volumes_by_congresses(input_path=output_path, dict_congresses=dict_congresses_volumes)
         for congress in congresses_files.keys():
-            file_output_path = os.path.join(file_output_path, "congress_"+str(congress))
+            file_output_path = os.path.join(file_output_path, "congress_"+str(congress)+".csv")
             if not os.path.exists(file_output_path):
                 print(f"Analysis of congress {congress}")
                 df_congressmen_filtered = df_congressmen[df_congressmen.congress==congress]
@@ -645,7 +645,7 @@ if __name__ == "__main__":
                                     df_congressmen=df_congressmen_filtered)
 
             else:
-                bigrams_count = pd.read_csv(file_output_path)
+                bigrams_count = pd.read_csv(file_output_path, index_col=0)
             X, y = load_data(bigrams_count)
             analysis(X, y)
 
