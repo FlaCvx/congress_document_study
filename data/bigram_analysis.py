@@ -281,6 +281,90 @@ def analysis_GridSearch(X, y):
     report(grid_search.grid_scores_)
 
 
+def analysis_RandomizedSearch(X, y):
+    print(__doc__)
+
+    # build a classifier
+    clf = RandomForestClassifier(n_estimators=20)
+
+    # specify parameters and distributions to sample from
+    param_dist = {"max_depth": [3, None],
+                  "max_features": [1, 3, 10, 20, 30],
+                  "min_samples_split": [3, 10],
+                  "min_samples_leaf": [1, 3, 10],
+                  "bootstrap": [True, False],
+                  "criterion": ["gini", "entropy"]}
+
+    # run randomized search
+    n_iter_search = 20
+    random_search = RandomizedSearchCV(clf, param_distributions=param_dist,
+                                       n_iter=n_iter_search)
+
+    start = time()
+    random_search.fit(X, y)
+    print("RandomizedSearchCV took %.2f seconds for %d candidates"
+          " parameter settings." % ((time() - start), n_iter_search))
+    print(random_search)
+
+
+    #Now run cros validation on the best model and print the results
+
+    return random_search
+
+clf = analysis_RandomizedSearch(X, y)
+
+
+def third_analysis(X, y):
+    from sklearn import datasets
+    from sklearn.model_selection import train_test_split
+    from sklearn.model_selection import GridSearchCV
+    from sklearn.metrics import classification_report
+    from sklearn.svm import SVC
+    # Split the dataset in two equal parts
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=0)
+
+    # Set the parameters by cross-validation
+    tuned_parameters = [{'kernel': ['rbf'], 'gamma': [1e-3, 1e-4],
+                         'C': [1, 10, 100, 1000]},
+                        {'kernel': ['linear'], 'C': [1, 10, 100, 1000]}]
+
+    scores = ['precision', 'recall']
+
+    for score in scores:
+        print("# Tuning hyper-parameters for %s" % score)
+        print()
+
+        clf = GridSearchCV(
+            SVC(), tuned_parameters, scoring='%s_macro' % score
+        )
+        clf.fit(X_train, y_train)
+
+        print("Best parameters set found on development set:")
+        print()
+        print(clf.best_params_)
+        print()
+        print("Grid scores on development set:")
+        print()
+        means = clf.cv_results_['mean_test_score']
+        stds = clf.cv_results_['std_test_score']
+        for mean, std, params in zip(means, stds, clf.cv_results_['params']):
+            print("%0.3f (+/-%0.03f) for %r"
+                  % (mean, std * 2, params))
+        print()
+
+        print("Detailed classification report:")
+        print()
+        print("The model is trained on the full development set.")
+        print("The scores are computed on the full evaluation set.")
+        print()
+        y_true, y_pred = y_test, clf.predict(X_test)
+        print(classification_report(y_true, y_pred))
+        print()
+        return y_true, y_pred
+    # Note the problem is too easy: the hyperparameter plateau is too flat and the
+    # output model is the same for precision and recall with ties in quality.
+
+
 def analysis(X, y):
 
     models = {
@@ -366,67 +450,131 @@ class EstimatorSelectionHelper:
 def match_congressmen(bigrams_count, df_congressmen):
 
     #Create the surname to match those ones of the congressmen
-    df_congressmen['match_surname'] = df_congressmen.bioname.str.split(",", expand=True)[0].str.lower().values
+
+    bigrams_count = bigrams_count.rename(columns={i: i.replace("mr ","") for i in bigrams_count.columns})
 
     #Filter only the columns of people in the df_congressmen dataframe, this will make the merge easier.
     columns_congressmen = bigrams_count.columns.difference(["w0","w1"]).values
-    matches = [man for man in columns_congressmen if man.split("mr ")[-1] in df_congressmen.match_surname.values]
-    matches = matches + ["w0","w1"]
+    matches = [man for man in columns_congressmen if man in df_congressmen.match_surname.values]
+    matches = ["w0","w1"] + matches
     bigrams_count = bigrams_count[matches]
-    #print(f"Columns: {bigrams_count.columns}")
-
-    #Create the match_surname column for te bigrmas dataframe as well
-    bigrams_count = bigrams_count.T
-    #print(f"Indexes: {bigrams_count.index}")
-    bigrams_count['match_surname'] = bigrams_count.index
-    bigrams_count['match_surname'] = bigrams_count.match_surname.str.split("mr ", expand=True)[1]
-
-    bigrams_count = bigrams_count.merge(df_congressmen[["match_surname","party_code"]], left_on='match_surname', right_on='match_surname')
-    #Could remove outliers
-
-    X = bigrams_count[bigrams_count.columns.difference(["match_surname","party_code"])].values
-    y = bigrams_count.party_code.values
-    return X,y
 
 
-def keep_common_bigrams(bigrams_count, threshold=1):
+    bigrams_count = bigrams_count.set_index(["w0","w1"]).T
+    #bigrams_count = bigrams_count.merge(df_congressmen.set_index("match_surname")["party_code"], how="left", left_index=True, right_index=True)
 
-    keep_not_rare_indexes = np.where((bigrams_count.sum(axis=1).values) > threshold)[0] #Remove tuples of w0,w1 used only by one congressmen
-    bigrams_count = bigrams_count[bigrams_count.index.isin(keep_not_rare_indexes)]
 
     return bigrams_count
 
 
-def extract_data(input_file_paths, df_congressmen):
+def keep_common_bigrams(bigrams_count, threshold=1):
 
-    all_paths = list(np.hstack(list_all_extension_files_per_directory(directory_path=input_file_paths, extension='csv')))
-    aligned_csvs = input_file_paths.replace("df_tuples","df_tuples_aligned")
+    bigrams_count = bigrams_count[bigrams_count.sum(axis=1)>threshold]
 
-    # all_paths_aligned = list_all_extension_files_per_directory(directory_path=aligned_csvs, extension='csv')
-    # all_paths_aligned = list(np.hstack(all_paths_aligned)) if len(all_paths_aligned)>0 else []
-    # if not os.path.exists(aligned_csvs) or len(all_paths_aligned)!=len(all_paths):
-    #     _ = d6tstack.combine_csv.CombinerCSV(all_paths).to_csv_align(aligned_csvs)
+    return bigrams_count
 
-    bigrams_count = dd.read_csv(all_paths[0])
-    #bigrams_count = bigrams_count.drop(columns=["filename","filepath"])
+def extract_data_old(input_file_paths, parent_path, df_congressmen):
+
+    aligned_csvs = parent_path.replace("df_tuples","df_tuples_aligned")
+    all_paths_aligned = list_all_extension_files_per_directory(directory_path=aligned_csvs, extension='csv')
+    all_paths_aligned = list(np.hstack(all_paths_aligned)) if len(all_paths_aligned)>0 else []
+    if not os.path.exists(aligned_csvs) or len(all_paths_aligned)!=len(input_file_paths):
+        _ = d6tstack.combine_csv.CombinerCSV(input_file_paths).to_csv_align(aligned_csvs)
+
+    bigrams_count = dd.read_csv(all_paths_aligned)
+    if 'filepath' in bigrams_count.columns:
+        bigrams_count = bigrams_count.drop(columns=["filepath"])
+    if 'filename' in bigrams_count.columns:
+        bigrams_count = bigrams_count.drop(columns=["filename"])
     bigrams_count = bigrams_count.reset_index(drop=True).rename(columns={"Unnamed: 0":"w0", "Unnamed: 1":"w1"})
     bigrams_count = bigrams_count.fillna(0).compute()
 
+    print(f"Before first filter: {bigrams_count.shape}")
     bigrams_count = keep_common_bigrams(bigrams_count=bigrams_count, threshold=1)
-    #TODO: Plot the histogram of occurrences of the bigrams. Then decide the threshold
+    print(f"After first filter: {bigrams_count.shape}")
+    bigrams_count = match_congressmen(bigrams_count, df_congressmen)
+    print(f"After match congressmen: {bigrams_count.shape}")
+    bigrams_count = keep_common_bigrams(bigrams_count=bigrams_count, threshold=1)
+    print(f"After second filter: {bigrams_count.shape}")
+
 
     bigrams_count = bigrams_count.groupby(["w0","w1"]).sum() #Sums the bigrams of the same congressmen
     bigrams_count = bigrams_count.reset_index()
-    # dd reads the csv by appending the new rows, if they have a column already, otherwise creates the column
-    # therefore with this operation I count if the bigram is present elsewhere for the same congressmen
 
-    #Match congressmen
-    X, y = match_congressmen(bigrams_count, df_congressmen)
+
+    X = bigrams_count[bigrams_count.columns.difference(["match_surname","party_code"])].values
+    y = bigrams_count.party_code.values
 
     assert isinstance(X, np.ndarray)
     assert isinstance(y, np.ndarray)
     assert X.shape[0]==y.shape[0]
     return X, y
+
+def clean_bigrams_matrix(bigrams_count, df_congressmen, threshold_bigrams, threshold_speaker):
+    print(f"Before filter on bigrams: {bigrams_count.shape}")
+    bigrams_count = keep_common_bigrams(bigrams_count=bigrams_count, threshold=threshold_bigrams)
+    print(f"After filter on bigrams: {bigrams_count.shape}")
+    bigrams_count = match_congressmen(bigrams_count, df_congressmen)
+    print(f"After match congressmen: {bigrams_count.shape}, the matrix is transposed ")
+    # Since it was transposed this keep only the congressmen with a certain number of bigrams.
+    bigrams_count = keep_common_bigrams(bigrams_count=bigrams_count, threshold=threshold_speaker)
+    print(f"After speaker filter: {bigrams_count.shape}")
+    return bigrams_count
+
+def filter_bigrams_matrix(bigrams_count, threshold_bigrams, threshold_speaker):
+    bigrams_count = bigrams_count.T
+    print(f"Before filter on bigrams: {bigrams_count.shape}")
+    bigrams_count = keep_common_bigrams(bigrams_count=bigrams_count, threshold=threshold_bigrams)
+    print(f"After filter on bigrams: {bigrams_count.shape}")
+    bigrams_count = bigrams_count.T
+    # Since it was transposed this keep only the congressmen with a certain number of bigrams.
+    bigrams_count = keep_common_bigrams(bigrams_count=bigrams_count, threshold=threshold_speaker)
+    print(f"After speaker filter: {bigrams_count.shape}")
+    return bigrams_count
+
+
+def extract_data(input_file_paths, parent_path, df_congressmen):
+    df_congressmen['match_surname'] = df_congressmen.bioname.str.split(",", expand=True)[0].str.lower().values
+
+    if len(input_file_paths)>0:
+        all_bigrams_count = None
+        for file in input_file_paths:
+            print(f"File: {file}")
+            bigrams_count = pd.read_csv(file)
+            if 'filepath' in bigrams_count.columns:
+                bigrams_count = bigrams_count.drop(columns=["filepath"])
+            if 'filename' in bigrams_count.columns:
+                bigrams_count = bigrams_count.drop(columns=["filename"])
+
+            bigrams_count = bigrams_count.rename(columns={"Unnamed: 0": "w0", "Unnamed: 1": "w1"})
+            bigrams_count = bigrams_count.fillna(0)
+
+            bigrams_count = clean_bigrams_matrix(bigrams_count=bigrams_count, df_congressmen=df_congressmen,
+                                                 threshold_bigrams=1, threshold_speaker=20)
+
+            if all_bigrams_count is None:
+                all_bigrams_count = bigrams_count
+            else:
+                if bigrams_count.shape[0]>0:
+                    all_bigrams_count = pd.concat([all_bigrams_count, bigrams_count])
+
+        all_bigrams_count = all_bigrams_count.fillna(0.0)
+        all_bigrams_count = all_bigrams_count.groupby(level=0).sum(axis=1)
+        all_bigrams_count = filter_bigrams_matrix(all_bigrams_count, threshold_bigrams=1, threshold_speaker=20)
+
+        all_bigrams_count = all_bigrams_count.merge(df_congressmen.set_index("match_surname")["party_code"], how="left",
+                                            left_index=True, right_index=True)
+        #TODO: Make sure that one speaker is associated to one party code, it can happen oth
+        y = all_bigrams_count.party_code.values
+        all_bigrams_count = all_bigrams_count.drop(columns=['party_code'])
+        X = all_bigrams_count.values
+
+        assert isinstance(X, np.ndarray)
+        assert isinstance(y, np.ndarray)
+        assert X.shape[0] == y.shape[0]
+        return X, y
+    else:
+        raise NotImplementedError
 
 
 def read_congressmen_info(congressmen_csv):
@@ -451,12 +599,18 @@ def read_congressmen_info(congressmen_csv):
     return info_congressmen
 
 
+def group_volumes_by_congresses(input_path, dict_congresses):
+    all_files = list_all_extension_files(input_path)
+    files_divided_by_congress = {i: list(np.hstack([[file for file in all_files if file.find("/"+ele+"/")>=0] for ele in dict_congresses[i]])) for i in dict_congresses}
+    return files_divided_by_congress
+
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Bigrams Analysis file')
     parser.add_argument('--input_files_path', type=str, required=True, help='Directory containig the .csv files')
     parser.add_argument('--congressmen_csv', type=str, default="./HSall_members.csv", help='Path to the congressmen csv file')
-
+    parser.add_argument('--type', type=str, required=True, help='Can be "volumes", "items", "congresses"')
     args = parser.parse_args()
 
     if not os.path.exists("~/nltk_data"):
@@ -471,12 +625,18 @@ if __name__ == "__main__":
     #Do here the division by sessions.
 
     df_congressmen = read_congressmen_info(args.congressmen_csv)
-    X, y = extract_data(input_file_paths=output_path, df_congressmen=df_congressmen)
 
-    #Run gridSearch
-    #analysis_GridSearch(X, y)
+    if args.type=='volumes':
+        dict_congresses_volumes = {1:['Volume_1']}
 
-    analysis(X, y)
+        congresses_files = group_volumes_by_congresses(input_path=output_path, dict_congresses=dict_congresses_volumes)
+        for congress in congresses_files.keys():
+            print(f"Analysis of congress {congress}")
+            df_congressmen_filtered = df_congressmen[df_congressmen.congress==congress]
+            X, y = extract_data(input_file_paths=congresses_files[congress], parent_path=output_path,
+                                df_congressmen=df_congressmen_filtered)
+            analysis(X, y)
+
 
     print(f"Job finished. Analysis of path: {args.input_files_path} completed")
 
