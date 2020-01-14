@@ -633,7 +633,24 @@ if __name__ == "__main__":
     if not os.path.exists(file_output_path):
         os.makedirs(file_output_path)
     if args.type=='volumes':
-        dict_congresses_volumes = {1:['Volume_1']}
+        dict_congresses_volumes = {1: ['Volume_1','Volume_2'],
+                                   2: ['Volume_3'],
+                                   3: ['Volume_4'],
+                                   4: ['Volume_5','Volume_6'],
+                                   5: ['Volume_7', 'Volume_8', 'Volume_9'],
+                                   6: ['Volume_10'],
+                                   7: ['Volume_11', 'Volume_12'],
+                                   8: ['Volume_13', 'Volume_14'],
+                                   9: ['Volume_15', 'Volume_16'],
+                                   10: ['Volume_17', 'Volume_18', 'Volume_19'],
+                                   11: ['Volume_20','Volume_21','Volume_22'],
+                                   12: ['Volume_23', 'Volume_24', 'Volume_25'],
+                                   13: ['Volume_26', 'Volume_27', 'Volume_28'],
+                                   14: ['Volume_29', 'Volume_30'],
+                                   15: ['Volume_31', 'Volume_32','Volume_33', 'Volume_34'],
+                                   16: ['Volume_35', 'Volume_36', 'Volume_37'],
+                                   17: ['Volume_38', 'Volume_39', 'Volume_40'],
+                                   18: ['Volume_41','Volume_42']}
 
         congresses_files = group_volumes_by_congresses(input_path=output_path, dict_congresses=dict_congresses_volumes)
         for congress in congresses_files.keys():
