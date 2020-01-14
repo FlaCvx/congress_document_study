@@ -127,6 +127,7 @@ def loadGloveModel(gloveFile="../../glove.6B/glove.6B.300d.txt"):
 
 
 def save_tuples_df(input_file_paths):
+    return input_file_paths.replace("speeches","df_tuples")
     #return "./1789to1824_DebatesAndProceedings/df_tuples/"
     dir_all_aligned = input_file_paths.replace("speeches","all_speeches_aligned")
 
@@ -310,9 +311,6 @@ def analysis_RandomizedSearch(X, y):
     #Now run cros validation on the best model and print the results
 
     return random_search
-
-clf = analysis_RandomizedSearch(X, y)
-
 
 def third_analysis(X, y):
     from sklearn import datasets
@@ -533,7 +531,7 @@ def filter_bigrams_matrix(bigrams_count, threshold_bigrams, threshold_speaker):
     return bigrams_count
 
 
-def extract_data(input_file_paths, parent_path, df_congressmen):
+def extract_data(input_file_paths, output_path, df_congressmen):
     df_congressmen['match_surname'] = df_congressmen.bioname.str.split(",", expand=True)[0].str.lower().values
 
     if len(input_file_paths)>0:
@@ -564,18 +562,23 @@ def extract_data(input_file_paths, parent_path, df_congressmen):
 
         all_bigrams_count = all_bigrams_count.merge(df_congressmen.set_index("match_surname")["party_code"], how="left",
                                             left_index=True, right_index=True)
-        #TODO: Make sure that one speaker is associated to one party code, it can happen oth
-        y = all_bigrams_count.party_code.values
-        all_bigrams_count = all_bigrams_count.drop(columns=['party_code'])
-        X = all_bigrams_count.values
 
-        assert isinstance(X, np.ndarray)
-        assert isinstance(y, np.ndarray)
-        assert X.shape[0] == y.shape[0]
-        return X, y
+        #TODO: Make sure that one speaker is associated to ONLY one party code, it can happen that is associated with more
+        all_bigrams_count.to_csv(output_path)
+        return all_bigrams_count
     else:
         raise NotImplementedError
 
+def load_data(bigrams_df_path):
+
+    y = bigrams_count.party_code.values
+    all_bigrams_count = bigrams_count.drop(columns=['party_code'])
+    X = all_bigrams_count.values
+
+    assert isinstance(X, np.ndarray)
+    assert isinstance(y, np.ndarray)
+    assert X.shape[0] == y.shape[0]
+    return X, y
 
 def read_congressmen_info(congressmen_csv):
 
@@ -626,15 +629,24 @@ if __name__ == "__main__":
 
     df_congressmen = read_congressmen_info(args.congressmen_csv)
 
+    file_output_path = output_path.replace("df_tuples", "bigrams")
+    if not os.path.exists(file_output_path):
+        os.makedirs(file_output_path)
     if args.type=='volumes':
         dict_congresses_volumes = {1:['Volume_1']}
 
         congresses_files = group_volumes_by_congresses(input_path=output_path, dict_congresses=dict_congresses_volumes)
         for congress in congresses_files.keys():
-            print(f"Analysis of congress {congress}")
-            df_congressmen_filtered = df_congressmen[df_congressmen.congress==congress]
-            X, y = extract_data(input_file_paths=congresses_files[congress], parent_path=output_path,
-                                df_congressmen=df_congressmen_filtered)
+            file_output_path = os.path.join(file_output_path, "congress_"+str(congress))
+            if not os.path.exists(file_output_path):
+                print(f"Analysis of congress {congress}")
+                df_congressmen_filtered = df_congressmen[df_congressmen.congress==congress]
+                bigrams_count = extract_data(input_file_paths=congresses_files[congress], output_path=file_output_path,
+                                    df_congressmen=df_congressmen_filtered)
+
+            else:
+                bigrams_count = pd.read_csv(file_output_path)
+            X, y = load_data(bigrams_count)
             analysis(X, y)
 
 
