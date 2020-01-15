@@ -629,9 +629,9 @@ if __name__ == "__main__":
 
     df_congressmen = read_congressmen_info(args.congressmen_csv)
 
-    file_output_path = output_path.replace("df_tuples", "bigrams")
-    if not os.path.exists(file_output_path):
-        os.makedirs(file_output_path)
+    dir_output_path = output_path.replace("df_tuples", "bigrams")
+    if not os.path.exists(dir_output_path):
+        os.makedirs(dir_output_path)
     if args.type=='volumes':
         dict_congresses_volumes = {1: ['Volume_1','Volume_2'],
                                    2: ['Volume_3'],
@@ -654,7 +654,7 @@ if __name__ == "__main__":
 
         congresses_files = group_volumes_by_congresses(input_path=output_path, dict_congresses=dict_congresses_volumes)
         for congress in congresses_files.keys():
-            file_output_path = os.path.join(file_output_path, "congress_"+str(congress)+".csv")
+            file_output_path = os.path.join(dir_output_path, "congress_"+str(congress)+".csv")
             if not os.path.exists(file_output_path):
                 print(f"Analysis of congress {congress}")
                 df_congressmen_filtered = df_congressmen[df_congressmen.congress==congress]
