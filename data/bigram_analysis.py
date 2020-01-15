@@ -21,6 +21,9 @@ from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from sklearn.datasets import load_digits
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
+import warnings
+warnings.filterwarnings("ignore")
+from sklearn.model_selection import KFold
 
 def remove_empty_df_from_list_dfs(input_file_paths):
     new_paths = []
@@ -127,7 +130,7 @@ def loadGloveModel(gloveFile="../../glove.6B/glove.6B.300d.txt"):
 
 
 def save_tuples_df(input_file_paths):
-    return input_file_paths.replace("speeches","df_tuples")
+    #return input_file_paths.replace("speeches","df_tuples")
     #return "./1789to1824_DebatesAndProceedings/df_tuples/"
     dir_all_aligned = input_file_paths.replace("speeches","all_speeches_aligned")
 
@@ -224,10 +227,6 @@ def embed_speeches(speeches, mean_speeches=True):
     return embedded_speeches
 
 
-def cluster_speeches(speeches_df):
-    pass
-
-
 def analysis_GridSearch(X, y):
     print(__doc__)
 
@@ -281,16 +280,50 @@ def analysis_GridSearch(X, y):
           % (time() - start, len(grid_search.grid_scores_)))
     report(grid_search.grid_scores_)
 
+def explore_classes(y):
+    from collections import Counter
+    classes = Counter(y)
+    print("Classes: ")
+    print(classes)
+    return
+
+def explore_features(X):
+    features_occurrences = []
+    for j in range(0, X.shape[1], 1):
+        features_occurrences.append(len(np.where(X[:, j] > 1)[0]))
+    hist, bin_edges = np.histogram(features_occurrences, density=True)
+    #print("Histogram: ", hist)
+
+    import matplotlib.pyplot as plt
+
+
+    # the histogram of the data
+    n, bins, patches = plt.hist(features_occurrences,density=True, facecolor='g', alpha=0.75)
+
+    plt.xlabel('feature occurrence')
+    plt.ylabel('Probability')
+    plt.title('Histogram of Features Occurrences')
+    plt.xlim(40, 160)
+    plt.ylim(0, 0.03)
+    plt.grid(True)
+    plt.show()
+    i=input()
+    return
 
 def analysis_RandomizedSearch(X, y):
-    print(__doc__)
+    #print(__doc__)
 
     # build a classifier
+    from sklearn import preprocessing
+    explore_features(X)
+    explore_classes(y)
+
+    X_normalized = preprocessing.normalize(X)
     clf = RandomForestClassifier(n_estimators=20)
 
     # specify parameters and distributions to sample from
-    param_dist = {"max_depth": [3, None],
-                  "max_features": [1, 3, 10, 20, 30],
+    param_dist = {"max_depth": [3,10, 20, None],
+                  "max_features": [1, 3, 10, 20, 30, 50, 100],
                   "min_samples_split": [3, 10],
                   "min_samples_leaf": [1, 3, 10],
                   "bootstrap": [True, False],
@@ -298,18 +331,37 @@ def analysis_RandomizedSearch(X, y):
 
     # run randomized search
     n_iter_search = 20
-    random_search = RandomizedSearchCV(clf, param_distributions=param_dist,
-                                       n_iter=n_iter_search)
+    random_search = RandomizedSearchCV(clf, param_distributions=param_dist, n_iter=n_iter_search)
 
     start = time()
-    random_search.fit(X, y)
-    print("RandomizedSearchCV took %.2f seconds for %d candidates"
-          " parameter settings." % ((time() - start), n_iter_search))
-    print(random_search)
+    random_search.fit(X_normalized, y)
+    #print("RandomizedSearchCV took %.2f seconds for %d candidates parameter settings." % ((time() - start), n_iter_search))
+    print(f"Accuracy score: {random_search.best_score_}")
+    best_model = random_search.best_estimator_
 
+    # kf = KFold(n_splits=5)
+    # from sklearn.metrics import accuracy_score
+    # from sklearn.metrics import multilabel_confusion_matrix
+    # from sklearn.metrics import precision_score
+    # from sklearn.metrics import recall_score
+    #
+    # accuracy = []
+    # precision = []
+    # recall = []
+    # for train_index, test_index in kf.split(X):
+    #     X_train, X_test = X[train_index], X[test_index]
+    #     y_train, y_test = y[train_index], y[test_index]
+    #     best_model.fit(X_train, y_train)
+    #     y_predicted = best_model.predict(X_test)
+    #     accuracy.append(accuracy_score(y_test, y_predicted))
+    #     precision.append(precision_score(y_test, y_predicted, average='micro' ))
+    #     recall.append(recall_score(y_test, y_predicted, average='micro'))
+    #     #print(f"Confusion Matrix: {multilabel_confusion_matrix(y_test, y_predicted)}\n")
+    #     print(f"Mean accuracy score: {np.mean(accuracy)}")
+    #     print(f"Mean precision score: {np.mean(precision)}")
+    #     print(f"Mean recall score: {np.mean(recall)}")
 
-    #Now run cros validation on the best model and print the results
-
+    print()
     return random_search
 
 def third_analysis(X, y):
@@ -654,9 +706,9 @@ if __name__ == "__main__":
 
         congresses_files = group_volumes_by_congresses(input_path=output_path, dict_congresses=dict_congresses_volumes)
         for congress in congresses_files.keys():
+            print(f"Analysis of congress {congress}")
             file_output_path = os.path.join(dir_output_path, "congress_"+str(congress)+".csv")
             if not os.path.exists(file_output_path):
-                print(f"Analysis of congress {congress}")
                 df_congressmen_filtered = df_congressmen[df_congressmen.congress==congress]
                 bigrams_count = extract_data(input_file_paths=congresses_files[congress], output_path=file_output_path,
                                     df_congressmen=df_congressmen_filtered)
@@ -664,7 +716,7 @@ if __name__ == "__main__":
             else:
                 bigrams_count = pd.read_csv(file_output_path, index_col=0)
             X, y = load_data(bigrams_count)
-            analysis(X, y)
+            analysis_RandomizedSearch(X, y)
 
 
     print(f"Job finished. Analysis of path: {args.input_files_path} completed")

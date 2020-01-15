@@ -19,6 +19,8 @@ data/*/df_tuples_aligned
 
 data/*/all_speeches_aligned
 
+data/*/bigrams
+
 data/*/items/
 
 data/*/congresses/
