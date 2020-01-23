@@ -21,9 +21,12 @@ from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from sklearn.datasets import load_digits
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
+import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore")
 from sklearn.model_selection import KFold
+from collections import Counter
+
 
 def remove_empty_df_from_list_dfs(input_file_paths):
     new_paths = []
@@ -281,41 +284,46 @@ def analysis_GridSearch(X, y):
     report(grid_search.grid_scores_)
 
 def explore_classes(y):
-    from collections import Counter
     classes = Counter(y)
-    print("Classes: ")
-    print(classes)
+    print(f"Classes: {classes}")
+
+    if len(list(classes.keys()))==2:
+        best_class = list(classes.keys())[0] if classes[list(classes.keys())[0]]>classes[list(classes.keys())[1]] else list(classes.keys())[1]
+        worst_class = list(classes.keys())[1] if classes[list(classes.keys())[0]] > classes[list(classes.keys())[1]] else list(classes.keys())[0]
+
+        tp = classes[best_class]
+        tn = 0
+        fp = classes[worst_class]
+        fn = 0
+
+        wrong_mean_accu = (tp+tn)/(tp+tn+fp+fn)
+        print(f"tp: {tp}, fp: {fp}")
+        print(f"The mean accuracy should not be: {wrong_mean_accu}")
     return
 
 def explore_features(X):
     features_occurrences = []
     for j in range(0, X.shape[1], 1):
-        features_occurrences.append(len(np.where(X[:, j] > 1)[0]))
-    hist, bin_edges = np.histogram(features_occurrences, density=True)
-    #print("Histogram: ", hist)
+        v = len(np.where(X[:, j] > 1)[0])
+        features_occurrences.append(v)
+    # plt.xlabel('Feature occurrence')
+    # plt.ylabel('Probability')
+    # plt.title('Histogram of Features Occurrences')
+    # plt.grid(True)
+    # plt.show()
 
-    import matplotlib.pyplot as plt
+    a = pd.DataFrame(X)
+    b = a[a > 4].dropna(axis=1, how='all')
 
-
-    # the histogram of the data
-    n, bins, patches = plt.hist(features_occurrences,density=True, facecolor='g', alpha=0.75)
-
-    plt.xlabel('feature occurrence')
-    plt.ylabel('Probability')
-    plt.title('Histogram of Features Occurrences')
-    plt.xlim(40, 160)
-    plt.ylim(0, 0.03)
-    plt.grid(True)
-    plt.show()
-    i=input()
-    return
+    return b.fillna(0.0).values
 
 def analysis_RandomizedSearch(X, y):
     #print(__doc__)
 
     # build a classifier
     from sklearn import preprocessing
-    explore_features(X)
+    X = explore_features(X)
+    print(f"New shape of X: {X.shape}")
     explore_classes(y)
 
     X_normalized = preprocessing.normalize(X)
@@ -323,7 +331,7 @@ def analysis_RandomizedSearch(X, y):
 
     # specify parameters and distributions to sample from
     param_dist = {"max_depth": [3,10, 20, None],
-                  "max_features": [1, 3, 10, 20, 30, 50, 100],
+                  "max_features": [1, 5, 10],
                   "min_samples_split": [3, 10],
                   "min_samples_leaf": [1, 3, 10],
                   "bootstrap": [True, False],
@@ -335,8 +343,10 @@ def analysis_RandomizedSearch(X, y):
 
     start = time()
     random_search.fit(X_normalized, y)
+    random_search.fit(X_normalized, y)
     #print("RandomizedSearchCV took %.2f seconds for %d candidates parameter settings." % ((time() - start), n_iter_search))
     print(f"Accuracy score: {random_search.best_score_}")
+
     best_model = random_search.best_estimator_
 
     # kf = KFold(n_splits=5)
