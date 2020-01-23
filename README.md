@@ -9,14 +9,15 @@ from 1824 to 1837, the third from 1833 to 1873. There are five main steps before
 5- Bigram analysis
 
 
-#### 1. DATASET CREATION
-The dataset can be found in the ./data directory, it is divided into three subdirectories.
-1- "./data/1789to1824_DebatesAndProceedings" scraped from the link: "https://memory.loc.gov/ammem/amlaw/lwaclink.html"
-2- "./data/1824to1837_DebatesAndProceedings" scraped from the link: "https://memory.loc.gov/ammem/amlaw/lwrdlink.html"
-3- "./data/1833to1873_Debates andProceedings". scraped from the link: "https://memory.loc.gov/ammem/amlaw/lwcglink.html"
+#### 1.1 DATASET CREATION
+The dataset can be found in the ./data directory, it is divided into three subdirectories.<br />
+1- "./data/1789to1824_DebatesAndProceedings" scraped from the link: "https://memory.loc.gov/ammem/amlaw/lwaclink.html"<br />
+2- "./data/1824to1837_DebatesAndProceedings" scraped from the link: "https://memory.loc.gov/ammem/amlaw/lwrdlink.html"<br />
+3- "./data/1833to1873_Debates andProceedings". scraped from the link: "https://memory.loc.gov/ammem/amlaw/lwcglink.html"<br />
 
 Each of the three data subdirectories contain a scraping file named "<date1>to<date2>_DebatesAndProceedings.py". 
 This file can be executed in parallel, it scrapes the web and saves the images.
+
 ```console
 python <date1>to<date2>_DebatesAndProceedings.py
 ```
@@ -56,14 +57,14 @@ will be saved in a directory called "text_volumes" and the file will have .txt a
 python detect_text.py --path_pngs ./1789to1824_DebatesAndProceedings/concat_pages
 ```
 
-#### 1.4 SPEECH SEGMENTATION
+#### 1.5 SPEECH SEGMENTATION
 For each .txt file created with the previous step, this script creates a corresponding .csv file with the speaker and 
 the list of speeches he made on that .txt file.
 ```console
 python segment_speech.py --input_files_path ./1789to1824_DebatesAndProceedings/text_volumes
 ```
 
-#### 1.4 BIGRAM ANALYSIS
+#### 1.6 BIGRAM ANALYSIS
 This script will take the previous created csv files, concatenate them together, merge all the speeches
 made by a single speaker and then perform an embedding of these speeches and study the distribution
 of these speeches
