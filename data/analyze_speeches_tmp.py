@@ -114,6 +114,7 @@ def align_speeches(input_files_path):
 
 
 def remove_out_of_vocab(model,speeches):
+    print("speeches:", speeches)
     final = [str(' '.join([word for word in speech.split() if word in model.index])) for speech in speeches]
     return final
 
@@ -162,6 +163,7 @@ def embed_speeches_congress(input_file_paths, output_path, df_congressmen, glove
     all_files = all_files.groupby(['name'])['speeches'].apply('|NEW_SPEECH|'.join).to_frame()
     speeches_df = all_files['speeches'].apply(lambda x: x.split("|NEW_SPEECH|"), meta=('speeches', 'object')).to_frame()
 
+    print(speeches_df.head())
     speeches_df = embed_speeches(speeches_df, glove_model)
 
     speeches_df.to_csv(output_path)
@@ -209,6 +211,9 @@ if __name__ == "__main__":
     glove_model = loadGloveModel(args.glove_path)
 
     dir_output_path = args.input_files_path.replace("speeches","congresses_embedded")
+    if not os.path.exists(dir_output_path):
+        os.makedirs(dir_output_path)
+
     for congress in congresses_files.keys():
         print(f"Creation of embeddings of speeches of congress {congress}")
         file_output_path = os.path.join(dir_output_path, "embedded_congress_"+str(congress)+".csv")
