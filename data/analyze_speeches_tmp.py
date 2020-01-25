@@ -124,10 +124,9 @@ def embed_and_average_speeches(model,speeches, mean_speeches):
         final = np.array(final).mean(axis=0)
     return final
 
-def embed_speeches(speeches, glove_path, mean_speeches=True):
-    model = loadGloveModel(glove_path)
-    speeches = speeches.groupby(['name'])['speeches'].apply(lambda x: remove_out_of_vocab(model, x)).reset_index()
-    embedded_speeches = speeches.groupby(['name'])['speeches'].apply(lambda x: embed_and_average_speeches(model, x, mean_speeches)).reset_index()
+def embed_speeches(speeches, glove_model, mean_speeches=True):
+    speeches = speeches.groupby(['name'])['speeches'].apply(lambda x: remove_out_of_vocab(glove_model, x)).reset_index()
+    embedded_speeches = speeches.groupby(['name'])['speeches'].apply(lambda x: embed_and_average_speeches(glove_model, x, mean_speeches)).reset_index()
 
     return embedded_speeches
 
@@ -145,7 +144,7 @@ def match_congressmen(all_files, df_congressmen):
 
     return all_files
 
-def embed_speeches_congress(input_file_paths, output_path, df_congressmen, glove_path):
+def embed_speeches_congress(input_file_paths, output_path, df_congressmen, glove_model):
 
     all_files = dd.read_csv(input_file_paths, dtype={'0': 'object', '1': 'object', '2': 'object', '3': 'object',
                                                      '4': 'object', '5': 'object', '6': 'object', '7': 'object',
@@ -163,7 +162,7 @@ def embed_speeches_congress(input_file_paths, output_path, df_congressmen, glove
     all_files = all_files.groupby(['name'])['speeches'].apply('|NEW_SPEECH|'.join).to_frame()
     speeches_df = all_files['speeches'].apply(lambda x: x.split("|NEW_SPEECH|"), meta=('speeches', 'object')).to_frame()
 
-    speeches_df = embed_speeches(speeches_df, glove_path)
+    speeches_df = embed_speeches(speeches_df, glove_model)
 
     speeches_df.to_csv(output_path)
     return speeches_df
@@ -216,6 +215,7 @@ if __name__ == "__main__":
         file_output_path = os.path.join(dir_output_path, "embedded_congress_"+str(congress)+".csv")
         if not os.path.exists(file_output_path):
             df_congressmen_filtered = df_congressmen[df_congressmen.congress==congress]
+            glove_model = loadGloveModel(args.glove_path)
             embedded_congresses_speeches = embed_speeches_congress(input_file_paths=congresses_files[congress],
                                                                    output_path=file_output_path,
                                                                    df_congressmen=df_congressmen_filtered,
