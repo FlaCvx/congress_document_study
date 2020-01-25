@@ -126,8 +126,8 @@ def embed_and_average_speeches(model,speeches, mean_speeches):
     return final
 
 def embed_speeches(speeches, glove_model, mean_speeches=True):
-    speeches = speeches.groupby(['name'])['speeches'].apply(lambda x: remove_out_of_vocab(glove_model, x)).reset_index()
-    embedded_speeches = speeches.groupby(['name'])['speeches'].apply(lambda x: embed_and_average_speeches(glove_model, x, mean_speeches)).reset_index()
+    speeches = speeches.groupby(['name'])['speeches'].apply(lambda x: remove_out_of_vocab(glove_model, x) if len(x)>0 else []).reset_index()
+    embedded_speeches = speeches.groupby(['name'])['speeches'].apply(lambda x: embed_and_average_speeches(glove_model, x, mean_speeches) if len(x)>0 else []).reset_index()
 
     return embedded_speeches
 
@@ -163,7 +163,6 @@ def embed_speeches_congress(input_file_paths, output_path, df_congressmen, glove
     all_files = all_files.groupby(['name'])['speeches'].apply('|NEW_SPEECH|'.join).to_frame()
     speeches_df = all_files['speeches'].apply(lambda x: x.split("|NEW_SPEECH|"), meta=('speeches', 'object')).to_frame()
 
-    print(speeches_df.head())
     speeches_df = embed_speeches(speeches_df, glove_model)
 
     speeches_df.to_csv(output_path)
