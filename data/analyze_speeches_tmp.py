@@ -186,7 +186,6 @@ if __name__ == "__main__":
         nltk.download('stopwords')
 
     df_congressmen = read_congressmen_info(args.congressmen_csv)
-
     dict_congresses_volumes = {1: ['Volume_1','Volume_2'],
                                    2: ['Volume_3'],
                                    3: ['Volume_4'],
@@ -205,9 +204,9 @@ if __name__ == "__main__":
                                    16: ['Volume_35', 'Volume_36', 'Volume_37'],
                                    17: ['Volume_38', 'Volume_39', 'Volume_40'],
                                    18: ['Volume_41','Volume_42']}
-
     aligned_speeches_path = align_speeches(input_files_path=args.input_files_path)
     congresses_files = group_volumes_by_congresses(input_path=aligned_speeches_path, dict_congresses=dict_congresses_volumes)
+    glove_model = loadGloveModel(args.glove_path)
 
     dir_output_path = args.input_files_path.replace("speeches","congresses_embedded")
     for congress in congresses_files.keys():
@@ -215,11 +214,10 @@ if __name__ == "__main__":
         file_output_path = os.path.join(dir_output_path, "embedded_congress_"+str(congress)+".csv")
         if not os.path.exists(file_output_path):
             df_congressmen_filtered = df_congressmen[df_congressmen.congress==congress]
-            glove_model = loadGloveModel(args.glove_path)
             embedded_congresses_speeches = embed_speeches_congress(input_file_paths=congresses_files[congress],
                                                                    output_path=file_output_path,
                                                                    df_congressmen=df_congressmen_filtered,
-                                                                   glove_path=args.glove_path)
+                                                                   glove_model=glove_model)
 
         else:
             embedded_congresses_speeches = pd.read_csv(file_output_path, index_col=0)
