@@ -124,8 +124,8 @@ def embed_and_average_speeches(model,speeches, mean_speeches):
         final = np.array(final).mean(axis=0)
     return final
 
-def embed_speeches(speeches, mean_speeches=True):
-    model = loadGloveModel("../glove/glove.6B.300d.txt")
+def embed_speeches(speeches, glove_path, mean_speeches=True):
+    model = loadGloveModel(glove_path)
     speeches = speeches.groupby(['name'])['speeches'].apply(lambda x: remove_out_of_vocab(model, x)).reset_index()
     embedded_speeches = speeches.groupby(['name'])['speeches'].apply(lambda x: embed_and_average_speeches(model, x, mean_speeches)).reset_index()
 
@@ -145,7 +145,7 @@ def match_congressmen(all_files, df_congressmen):
 
     return all_files
 
-def embed_speeches_congress(input_file_paths, output_path, df_congressmen):
+def embed_speeches_congress(input_file_paths, output_path, df_congressmen, glove_path):
 
     all_files = dd.read_csv(input_file_paths, dtype={'0': 'object', '1': 'object', '2': 'object', '3': 'object',
                                                      '4': 'object', '5': 'object', '6': 'object', '7': 'object',
@@ -163,7 +163,7 @@ def embed_speeches_congress(input_file_paths, output_path, df_congressmen):
     all_files = all_files.groupby(['name'])['speeches'].apply('|NEW_SPEECH|'.join).to_frame()
     speeches_df = all_files['speeches'].apply(lambda x: x.split("|NEW_SPEECH|"), meta=('speeches', 'object')).to_frame()
 
-    speeches_df = embed_speeches(speeches_df)
+    speeches_df = embed_speeches(speeches_df, glove_path)
 
     speeches_df.to_csv(output_path)
     return speeches_df
@@ -177,6 +177,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Segment file')
     parser.add_argument('--input_files_path', type=str, required=True, help='Directory containig the .csv files' )
     parser.add_argument('--congressmen_csv', type=str, default="./HSall_members.csv", help='Path to the congressmen csv file')
+    parser.add_argument('--glove_path', type=str, required=True, help='Path to the congressmen csv file')
 
     args = parser.parse_args()
 
@@ -217,11 +218,11 @@ if __name__ == "__main__":
             df_congressmen_filtered = df_congressmen[df_congressmen.congress==congress]
             embedded_congresses_speeches = embed_speeches_congress(input_file_paths=congresses_files[congress],
                                                                    output_path=file_output_path,
-                                                                   df_congressmen=df_congressmen_filtered)
+                                                                   df_congressmen=df_congressmen_filtered,
+                                                                   glove_path=args.glove_path)
 
         else:
             embedded_congresses_speeches = pd.read_csv(file_output_path, index_col=0)
-        break
         #X, y = load_data(bigrams_count)
         #analysis_RandomizedSearch(X, y)
 
