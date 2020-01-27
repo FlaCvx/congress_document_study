@@ -163,13 +163,11 @@ def embed_speeches_congress(input_file_paths, output_path, df_congressmen, glove
     all_files = all_files.groupby(['name'])['speeches'].apply('|NEW_SPEECH|'.join).to_frame()
     speeches_df = all_files['speeches'].apply(lambda x: x.split("|NEW_SPEECH|"), meta=('speeches', 'object')).to_frame()
 
-    speeches_df = embed_speeches(speeches_df, glove_model)
+    speeches_df = embed_speeches(speeches_df.compute(), glove_model)
+    speeches_df[['name','party_code']] = all_files.reset_index()[['name','party_code']]
 
     speeches_df.to_csv(output_path)
     return speeches_df
-
-
-
 
 
 if __name__ == "__main__":
