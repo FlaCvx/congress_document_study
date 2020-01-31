@@ -228,7 +228,7 @@ def sif_embed(speeches):
     return final
 
 def SIF_weighted_embedding(speeches):
-
+    raise NotImplementedError
     print(speeches.shape)
     embedded_speeches = speeches.groupby(['name'])['speeches'].apply(
         lambda x: embed_universal(x) if len(x) > 0 else []).reset_index()
@@ -282,7 +282,10 @@ if __name__ == "__main__":
     for congress in congresses_files.keys():
         print(f"Creation of embeddings of speeches of congress {congress}")
         file_output_path = os.path.join(dir_output_path, "embedded_congress_"+str(congress)+".csv")
-        if not os.path.exists(file_output_path):
+        tmp_1 = file_output_path.replace("congresses_embedded", "universalSE_embedded")
+        tmp_2 = file_output_path.replace("congresses_embedded", "sif_weighted_embedded")
+
+        if (not os.path.exists(file_output_path)) | (not os.path.exists(tmp_1)) | (not os.path.exists(tmp_2)):
             df_congressmen_filtered = df_congressmen[df_congressmen.congress==congress]
             embedded_congresses_speeches = embed_speeches_congress(input_file_paths=congresses_files[congress],
                                                                    output_path=file_output_path,
@@ -291,9 +294,6 @@ if __name__ == "__main__":
                                                                    universalSE= args.universal_sentence_encoder,
                                                                    SIF_weighted=args.SIF_weighted_embedding
                                                                    )
-
-        else:
-            embedded_congresses_speeches = pd.read_csv(file_output_path, index_col=0)
         #X, y = load_data(bigrams_count)
         #analysis_RandomizedSearch(X, y)
 
