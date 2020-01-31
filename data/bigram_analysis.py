@@ -255,17 +255,6 @@ def analysis_GridSearch(X, y):
                   "bootstrap": [True, False],
                   "criterion": ["gini", "entropy"]}
 
-    # # run randomized search
-    # n_iter_search = 20
-    # random_search = RandomizedSearchCV(clf, param_distributions=param_dist,
-    #                                    n_iter=n_iter_search)
-    #
-    # start = time()
-    # random_search.fit(X, y)
-    # print("RandomizedSearchCV took %.2f seconds for %d candidates"
-    #       " parameter settings." % ((time() - start), n_iter_search))
-    # report(random_search.grid_scores_)
-
     # use a full grid over all parameters
     param_grid = {"max_depth": [3, None],
                   "max_features": [1, 3, 10, 20, 30],
@@ -342,7 +331,6 @@ def analysis_RandomizedSearch(X, y):
     random_search = RandomizedSearchCV(clf, param_distributions=param_dist, n_iter=n_iter_search)
 
     start = time()
-    random_search.fit(X_normalized, y)
     random_search.fit(X_normalized, y)
     #print("RandomizedSearchCV took %.2f seconds for %d candidates parameter settings." % ((time() - start), n_iter_search))
     print(f"Accuracy score: {random_search.best_score_}")

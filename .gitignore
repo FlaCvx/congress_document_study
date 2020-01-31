@@ -25,8 +25,10 @@ data/*/items/
 
 data/*/congresses/
 
-#Ignore glove
-glove/
+data/*/congresses_embedded/
+
+#Glove model
+/glove/*
 
 #Ignore idea files
 .idea
@@ -35,3 +37,6 @@ glove/
 data/d6tstack/__pycache__/*
 
 data/__pycache__/*
+
+#Ignoring jupyter checkpoints
+data/.ipynb_checkpoints/*

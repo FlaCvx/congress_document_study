@@ -1,4 +1,5 @@
 import argparse
+import pdb
 import os
 import numpy as np
 import pandas as pd
@@ -114,19 +115,20 @@ def align_speeches(input_files_path):
 
 
 def remove_out_of_vocab(model,speeches):
-    print("speeches:", speeches)
     final = [str(' '.join([word for word in speech.split() if word in model.index])) for speech in speeches]
     return final
 
 def embed_and_average_speeches(model,speeches, mean_speeches):
-    final = [[model.loc[word] for word in speech[0].split()] for speech in speeches]
+    print(speeches)
+    final = [[model.loc[word] for word in speech.split()] for speech in speeches.iloc[0]]
     final = [np.array(speech).mean(axis=0) for speech in final if len(speech)>0]
     if mean_speeches:
         final = np.array(final).mean(axis=0)
     return final
 
-def embed_speeches(speeches, glove_model, mean_speeches=True):
-    speeches = speeches.groupby(['name'])['speeches'].apply(lambda x: remove_out_of_vocab(glove_model, x) if len(x)>0 else []).reset_index()
+def embed_speeches(speeches, glove_model, mean_speeches=False):
+    speeches = speeches.groupby(['name'])['speeches'].apply(lambda x: remove_out_of_vocab(glove_model, x.iloc[0]) if len(x)>0 else []).reset_index()
+    print(speeches.shape)
     embedded_speeches = speeches.groupby(['name'])['speeches'].apply(lambda x: embed_and_average_speeches(glove_model, x, mean_speeches) if len(x)>0 else []).reset_index()
 
     return embedded_speeches
@@ -145,37 +147,103 @@ def match_congressmen(all_files, df_congressmen):
 
     return all_files
 
-def embed_speeches_congress(input_file_paths, output_path, df_congressmen, glove_model):
+def embed_speeches_congress(input_file_paths, output_path, df_congressmen, glove_path, universalSE, SIF_weighted):
 
     all_files = dd.read_csv(input_file_paths, dtype={'0': 'object', '1': 'object', '2': 'object', '3': 'object',
                                                      '4': 'object', '5': 'object', '6': 'object', '7': 'object',
-                                                     '8': 'object', '9': 'object', '10': 'object'})
+                                                     '8': 'object', '9': 'object', '10': 'object', '11': 'object',
+                                                     '12': 'object','13': 'object', '14': 'object', '15': 'object',
+                                                     '16': 'object','17': 'object', '18': 'object', '19': 'object',
+                                                     '20': 'object', '21': 'object', '22': 'object', '23': 'object',
+                                                     '24': 'object', '25': 'object', '26': 'object', '27': 'object',
+                                                     '28': 'object', '29': 'object', '30': 'object', '31': 'object',
+                                                     '32': 'object', '33': 'object', '34': 'object', '35': 'object',
+                                                     '36': 'object', '37': 'object', '38': 'object', '39': 'object',
+                                                     })
 
     for i in all_files.columns.values:
         all_files[i] = all_files[i].astype(str)
 
+    #all_files = all_files.compute()
     all_files = match_congressmen(all_files=all_files, df_congressmen=df_congressmen)
     info = all_files[['name', 'filename', 'filepath', 'party_code']]
 
     all_files = all_files[all_files.columns.difference(['name', 'filename', 'filepath', 'party_code'])].applymap(preprocess_text)
     all_files = all_files.apply('|NEW_SPEECH|'.join, axis=1).reset_index(drop=True).to_frame().rename(columns={0: 'speeches'})
     all_files['name'] = info['name']
-    all_files = all_files.groupby(['name'])['speeches'].apply('|NEW_SPEECH|'.join).to_frame()
+    all_files['party_code'] = info['party_code']
+    all_files = all_files.groupby(['name','party_code'])['speeches'].apply('|NEW_SPEECH|'.join).to_frame()
+
     speeches_df = all_files['speeches'].apply(lambda x: x.split("|NEW_SPEECH|"), meta=('speeches', 'object')).to_frame()
+    speeches_df = speeches_df.compute()
 
-    speeches_df = embed_speeches(speeches_df.compute(), glove_model)
-    speeches_df[['name','party_code']] = all_files.reset_index()[['name','party_code']]
+    if glove_path is not None:
+        tmp_output_path = output_path.replace("congresses_embedded", "glove_embedded")
+        if not os.path.exists(tmp_output_path):
+            glove_model = loadGloveModel(glove_path)
+            speeches_df = embed_speeches(speeches_df, glove_model)
+            speeches_df[['name','party_code']] = all_files.compute().reset_index()[['name','party_code']]
+            speeches_df.to_csv(tmp_output_path)
 
-    speeches_df.to_csv(output_path)
+    if universalSE:
+        tmp_output_path = output_path.replace("congresses_embedded","universalSE_embedded")
+        if not os.path.exists(tmp_output_path):
+            speeches_df = universal_sentence_embedding(speeches_df)
+            speeches_df[['name','party_code']] = all_files.compute().reset_index()[['name','party_code']]
+            speeches_df.to_csv(tmp_output_path)
+
+    if SIF_weighted:
+        tmp_output_path = output_path.replace("congresses_embedded", "sif_weighted_embedded")
+        if not os.path.exists(tmp_output_path):
+            speeches_df = SIF_weighted_embedding(speeches_df)
+            speeches_df[['name','party_code']] = all_files.compute().reset_index()[['name','party_code']]
+            speeches_df.to_csv(tmp_output_path)
+
+        raise NotImplementedError
+
+    print(f"Wrote file: {output_path}")
     return speeches_df
+
+
+def embed_universal(speeches):
+    import tensorflow_hub as hub
+    embed = hub.Module("https://tfhub.dev/google/""universal-sentence-encoder/1")
+    print(speeches)
+    final = [embed(speech) for speech in speeches.iloc[0]]
+    return final
+
+def universal_sentence_embedding(speeches):
+
+    print(speeches.shape)
+    embedded_speeches = speeches.groupby(['name'])['speeches'].apply(
+        lambda x: embed_universal(x) if len(x) > 0 else []).reset_index()
+    return embedded_speeches
+
+
+def sif_embed(speeches):
+    import tensorflow_hub as hub
+    embed = hub.Module("https://tfhub.dev/google/""universal-sentence-encoder/1")
+    print(speeches)
+    final = [embed(speech) for speech in speeches.iloc[0]]
+    return final
+
+def SIF_weighted_embedding(speeches):
+
+    print(speeches.shape)
+    embedded_speeches = speeches.groupby(['name'])['speeches'].apply(
+        lambda x: embed_universal(x) if len(x) > 0 else []).reset_index()
+    return embedded_speeches
 
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Segment file')
+
     parser.add_argument('--input_files_path', type=str, required=True, help='Directory containig the .csv files' )
     parser.add_argument('--congressmen_csv', type=str, default="./HSall_members.csv", help='Path to the congressmen csv file')
-    parser.add_argument('--glove_path', type=str, required=True, help='Path to the congressmen csv file')
+    parser.add_argument('--glove_path', type=str, required=False, default=None, help='Path to the congressmen csv file')
+    parser.add_argument('--universal_sentence_encoder', action='store_true', help='')
+    parser.add_argument('--SIF_weighted_embedding', action='store_true', help='')
 
     args = parser.parse_args()
 
@@ -205,7 +273,7 @@ if __name__ == "__main__":
                                    18: ['Volume_41','Volume_42']}
     aligned_speeches_path = align_speeches(input_files_path=args.input_files_path)
     congresses_files = group_volumes_by_congresses(input_path=aligned_speeches_path, dict_congresses=dict_congresses_volumes)
-    glove_model = loadGloveModel(args.glove_path)
+
 
     dir_output_path = args.input_files_path.replace("speeches","congresses_embedded")
     if not os.path.exists(dir_output_path):
@@ -219,7 +287,10 @@ if __name__ == "__main__":
             embedded_congresses_speeches = embed_speeches_congress(input_file_paths=congresses_files[congress],
                                                                    output_path=file_output_path,
                                                                    df_congressmen=df_congressmen_filtered,
-                                                                   glove_model=glove_model)
+                                                                   glove_path=args.glove_path,
+                                                                   universalSE= args.universal_sentence_encoder,
+                                                                   SIF_weighted=args.SIF_weighted_embedding
+                                                                   )
 
         else:
             embedded_congresses_speeches = pd.read_csv(file_output_path, index_col=0)
@@ -228,3 +299,4 @@ if __name__ == "__main__":
 
 
     print(f"Job finished. Analysis of path: {args.input_files_path} completed")
+
