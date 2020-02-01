@@ -205,34 +205,22 @@ def embed_speeches_congress(input_file_paths, output_path, df_congressmen, glove
     return speeches_df
 
 
-def embed_universal(speeches):
-    import tensorflow_hub as hub
-    embed = hub.Module("https://tfhub.dev/google/""universal-sentence-encoder/1")
-    print(speeches)
-    final = [embed(speech) for speech in speeches.iloc[0]]
-    return final
-
 def universal_sentence_embedding(speeches):
-
-    print(speeches.shape)
-    embedded_speeches = speeches.groupby(['name'])['speeches'].apply(
-        lambda x: embed_universal(x) if len(x) > 0 else []).reset_index()
-    return embedded_speeches
-
-
-def sif_embed(speeches):
     import tensorflow_hub as hub
-    embed = hub.Module("https://tfhub.dev/google/""universal-sentence-encoder/1")
-    print(speeches)
-    final = [embed(speech) for speech in speeches.iloc[0]]
-    return final
+    import tensorflow as tf
+
+    embed = hub.Module("https://tfhub.dev/google/universal-sentence-encoder/2")
+    tf.logging.set_verbosity(tf.logging.ERROR)
+    with tf.Session() as session:
+        session.run([tf.global_variables_initializer(), tf.tables_initializer()])
+        embedded_speeches = speeches.groupby(['name'])['speeches'].apply(
+            lambda x: session.run(embed(x)) if len(x) > 0 else []).reset_index()
+
+    return embedded_speeches
 
 def SIF_weighted_embedding(speeches):
     raise NotImplementedError
-    print(speeches.shape)
-    embedded_speeches = speeches.groupby(['name'])['speeches'].apply(
-        lambda x: embed_universal(x) if len(x) > 0 else []).reset_index()
-    return embedded_speeches
+    return
 
 
 if __name__ == "__main__":
