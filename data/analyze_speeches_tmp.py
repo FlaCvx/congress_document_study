@@ -189,7 +189,6 @@ def embed_speeches_congress(input_file_paths, output_path, df_congressmen, glove
         tmp_output_path = output_path.replace("congresses_embedded","universalSE_embedded")
         if not os.path.exists(tmp_output_path):
             speeches_df = universal_sentence_embedding(speeches_df)
-            speeches_df[['name','party_code']] = all_files.compute().reset_index()[['name','party_code']]
             speeches_df.to_csv(tmp_output_path)
 
     if SIF_weighted:
@@ -213,7 +212,7 @@ def universal_sentence_embedding(speeches):
     tf.logging.set_verbosity(tf.logging.ERROR)
     with tf.Session() as session:
         session.run([tf.global_variables_initializer(), tf.tables_initializer()])
-        embedded_speeches = speeches.groupby(['name'])['speeches'].apply(
+        embedded_speeches = speeches.groupby(['name','party_code'])['speeches'].apply(
             lambda x: session.run(embed(x)) if len(x) > 0 else []).reset_index()
 
     return embedded_speeches
