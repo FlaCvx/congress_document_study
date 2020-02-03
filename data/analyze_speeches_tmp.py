@@ -204,6 +204,15 @@ def embed_speeches_congress(input_file_paths, output_path, df_congressmen, glove
     print(f"Wrote file: {output_path}")
     return speeches_df
 
+def embed_universal(speeches, embed_model, session):
+    x = speeches.iloc[0]
+    x = [ele for ele in x if ele!='nan' ]
+    if len(x) > 0:
+        x_e = session.run(embed_model(x))
+    else:
+        x_e = []
+    return x_e 
+    
 
 def universal_sentence_embedding(speeches):
     import tensorflow_hub as hub
@@ -213,9 +222,11 @@ def universal_sentence_embedding(speeches):
     tf.logging.set_verbosity(tf.logging.ERROR)
     with tf.Session() as session:
         session.run([tf.global_variables_initializer(), tf.tables_initializer()])
-        embedded_speeches = speeches.groupby(['name'])['speeches'].apply(
-            lambda x: session.run(embed(x)) if len(x) > 0 else []).reset_index()
-
+        #embedded_speeches = speeches.groupby(['name'])['speeches'].apply(lambda x: session.run(embed(x.iloc[0])) if len(x) > 0 else []).reset_index()
+        embedded_speeches = speeches.groupby(['name'])['speeches'].apply(lambda x: embed_universal(x, embed, session))
+        import pdb; pdb.set_trace()
+        embedded_speeches = embedded_speeches.reset_index()
+    import pdb; pdb.set_trace()
     return embedded_speeches
 
 def SIF_weighted_embedding(speeches):
