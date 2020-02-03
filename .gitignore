@@ -27,6 +27,8 @@ data/*/congresses/
 
 data/*/congresses_embedded/
 
+data/*/glove_embedded
+
 #Glove model
 /glove/*
 
