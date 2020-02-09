@@ -180,30 +180,42 @@ def embed_speeches_congress(input_file_paths, output_path, df_congressmen, glove
     if glove_path is not None:
         tmp_output_path = output_path.replace("congresses_embedded", "glove_embedded")
         if not os.path.exists(tmp_output_path):
+            print(f"Creation of embeddings: {tmp_output_path}")
             glove_model = loadGloveModel(glove_path)
             speeches_df = embed_speeches(speeches_df, glove_model)
             speeches_df[['name','party_code']] = all_files.compute().reset_index()[['name','party_code']]
             speeches_df.to_csv(tmp_output_path)
+            print(f"Wrote file: {tmp_output_path}")
 
     if universalSE:
-        tmp_output_path = output_path.replace("congresses_embedded","universalSE_embedded")
-        if not os.path.exists(tmp_output_path):
-            speeches_df = universal_sentence_embedding(speeches_df)
-            speeches_df.to_csv(tmp_output_path)
+        try:
+            tmp_output_path = output_path.replace("congresses_embedded","universalSE_embedded")
+            #TODO: Create directory if it does not exists
+            if not os.path.exists(tmp_output_path):
+                print(f"Creation of embeddings: {tmp_output_path}")
+                speeches_df = universal_sentence_embedding(speeches_df)
+                speeches_df.to_csv(tmp_output_path)
+                print(f"Wrote file: {tmp_output_path}")
+        except:
+            count = 0
+
 
     if SIF_weighted:
+        raise NotImplementedError
         tmp_output_path = output_path.replace("congresses_embedded", "sif_weighted_embedded")
         if not os.path.exists(tmp_output_path):
             speeches_df = SIF_weighted_embedding(speeches_df)
             speeches_df[['name','party_code']] = all_files.compute().reset_index()[['name','party_code']]
             speeches_df.to_csv(tmp_output_path)
+            print(f"Wrote file: {tmp_output_path}")
 
-        raise NotImplementedError
+    del speeches_df
+    del all_files
 
-    print(f"Wrote file: {output_path}")
-    return speeches_df
+    return
 
 def embed_universal(speeches, embed_model, session):
+    print(speeches)
     x = speeches.iloc[0]
     x = [ele for ele in x if ele!='nan' ]
     if len(x) > 0:
@@ -221,9 +233,10 @@ def universal_sentence_embedding(speeches):
     tf.logging.set_verbosity(tf.logging.ERROR)
     with tf.Session() as session:
         session.run([tf.global_variables_initializer(), tf.tables_initializer()])
-        embedded_speeches = embedded_speeches.reset_index()
         embedded_speeches = speeches.groupby(['name','party_code'])['speeches'].apply(
-            lambda x: session.run(embed(x)) if len(x) > 0 else []).reset_index()
+            lambda x: embed_universal(x, embed, session) if len(x) > 0 else []).reset_index()
+        embedded_speeches = embedded_speeches.reset_index()
+        embedded_speeches = embedded_speeches.drop(columns=['index'])
     return embedded_speeches
 
 def SIF_weighted_embedding(speeches):
@@ -276,23 +289,24 @@ if __name__ == "__main__":
         os.makedirs(dir_output_path)
 
     for congress in congresses_files.keys():
-        print(f"Creation of embeddings of speeches of congress {congress}")
-        file_output_path = os.path.join(dir_output_path, "embedded_congress_"+str(congress)+".csv")
-        tmp_1 = file_output_path.replace("congresses_embedded", "universalSE_embedded")
-        tmp_2 = file_output_path.replace("congresses_embedded", "sif_weighted_embedded")
 
-        if (not os.path.exists(file_output_path)) | (not os.path.exists(tmp_1)) | (not os.path.exists(tmp_2)):
+        file_output_path = os.path.join(dir_output_path, "embedded_congress_"+str(congress)+".csv")
+        tmp_1 = os.path.exists(file_output_path.replace("congresses_embedded", "universalSE_embedded")) if args.universal_sentence_encoder is not False else True 
+        tmp_2 = os.path.exists(file_output_path.replace("congresses_embedded", "sif_weighted_embedded")) if args.SIF_weighted_embedding is not False else True
+
+        if (not os.path.exists(file_output_path)) | (not tmp_1) | (not tmp_2):
+            print(f"Creation of embeddings of speeches of congress {congress}")
             df_congressmen_filtered = df_congressmen[df_congressmen.congress==congress]
-            embedded_congresses_speeches = embed_speeches_congress(input_file_paths=congresses_files[congress],
+            embed_speeches_congress(input_file_paths=congresses_files[congress],
                                                                    output_path=file_output_path,
                                                                    df_congressmen=df_congressmen_filtered,
                                                                    glove_path=args.glove_path,
                                                                    universalSE= args.universal_sentence_encoder,
                                                                    SIF_weighted=args.SIF_weighted_embedding
                                                                    )
-        #X, y = load_data(bigrams_count)
         #analysis_RandomizedSearch(X, y)
-
+        else:
+            print(f"Embeddings of speeches of congress {congress} already exists. ")
 
     print(f"Job finished. Analysis of path: {args.input_files_path} completed")
 

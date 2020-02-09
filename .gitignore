@@ -29,6 +29,7 @@ data/*/congresses_embedded/
 
 data/*/glove_embedded
 
+data/*/universalSE_embedded
 #Glove model
 /glove/*
 
