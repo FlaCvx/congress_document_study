@@ -1,4 +1,7 @@
+data/credentials.json
+
 #Ignore data
+
 data/1789to1824_DebatesAndProceedings/volumes/
 
 data/*/hocrs_files/
