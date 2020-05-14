@@ -1,6 +1,22 @@
 # Polarization of Speeches Project.
-This project is ideally divided in three parts. First part with speeches from 1789 to 1824, a second part 
-from 1824 to 1837, the third from 1833 to 1873. There are five main steps before the final analysis.
+The project aims at analyzing the polarization of the speeches of congressmen between 1789 and 1873.
+In order to do this, we need to first build the dataset. We do this by scraping the web to obtain the 
+scans of the congresses' documents.
+Once we have all the scans, we need to perform OCR on these documents. In order to
+do this, we use the Google Cloud Vision API. Unfortunately this API is not able to
+recognize if a page is organized in multiple columns, which is our case. Therefore, 
+before feeding the pages to the API we split and recompose the page into one-column-oriented
+pages. Then we feed this pages to the API in order to obtain text data.
+The text data is finally cleaned and it will be used to create a new dataset on which we will perform 
+our analysis.
+This new dataset will associate all the speeches to their appropriate congressman.
+Since we know the party of each congressman, we will then run ML on this new dataset to
+see whether we can predict the party of a congressman solely based on his speech.
+
+This project has three datasets. First dataset with speeches from 1789 to 1824, 
+a second datasets 
+from 1824 to 1837 and the third one from 1833 to 1873. 
+There are five main steps before the final analysis.
 1- Dataset Creation (Scraping of the websites)
 2- Creation of image format information.
 3- Page splitting
@@ -37,12 +53,13 @@ we need to segment these columns and create a single column file. This is done i
 ```console
 python split_pages.py --hocr_paths ./1789to1824_DebatesAndProceedings/hocrs_files --page_type volumes
 ```
-Future improvement: This algorithm fails some times if the page is a little be inclined. Could be adjusted.  
+Future improvement: This algorithm fails some times if the page is inclined. Could be improved.  
 
 
 #### 1.4 CONCAT MULTIPLE IMAGES
-From now, all the steps MUST be run once all the previous steps are completed. At least once every
-subdirectory is completed, otherwise it will concatenate images and may skip others that are not yet available.. 
+From now, all the next steps MUST be run once all the previous steps are completed. 
+Otherwise the 
+ will concatenate images and may skip others that are not yet available.. 
 
 This step is executed to reduce the number of ocr queries. The parameter "num_pages" specify how many files from the
 previous step should be concatenated to create one single image.
@@ -66,8 +83,7 @@ python segment_speech.py --input_files_path ./1789to1824_DebatesAndProceedings/t
 
 #### 1.6 BIGRAM ANALYSIS
 This script will take the previous created csv files, concatenate them together, merge all the speeches
-made by a single speaker and then perform an embedding of these speeches and study the distribution
-of these speeches
+made by a single speaker and then perform a bygram analysis of these speeches.
  
 ```console
 python bigram_analysis.py --input_files_path /home/fla/remote/cnb/Desktop/RA/congress_document_study/data/1789to1824_DebatesAndProceedings/speeches --type volumes

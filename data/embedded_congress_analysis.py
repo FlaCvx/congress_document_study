@@ -149,9 +149,25 @@ def analysis_GridSearch(X, y):
     def tp(y_true, y_pred): return confusion_matrix(y_true, y_pred)[1, 1]
 
     from sklearn.metrics import recall_score, balanced_accuracy_score
-    def my_precision(y_true, y_pred): return precision_score(y_true, y_pred, pos_label=y_true[0])
-    def my_recall(y_true, y_pred): return recall_score(y_true, y_pred, pos_label=y_true[0])
-    def my_f1(y_true, y_pred): return f1_score(y_true, y_pred, pos_label=y_true[0])
+
+    def my_precision(y_true, y_pred):
+        if np.unique(y_true).__len__()==2:
+            return precision_score(y_true, y_pred, pos_label=y_true[0])
+        else:
+            return precision_score(y_true, y_pred, pos_label=y_true[0], average='weighted')
+
+    def my_recall(y_true, y_pred):
+        if np.unique(y_true).__len__()==2:
+            return recall_score(y_true, y_pred, pos_label=y_true[0])
+        else:
+            return recall_score(y_true, y_pred, pos_label=y_true[0], average='weighted')
+
+    def my_f1(y_true, y_pred):
+        if np.unique(y_true).__len__()==2:
+            return f1_score(y_true, y_pred, pos_label=y_true[0])
+        else:
+            return f1_score(y_true, y_pred, pos_label=y_true[0], average='weighted')
+
     scoring = {'tp': make_scorer(tp), 'tn': make_scorer(tn),
                'fp': make_scorer(fp), 'fn': make_scorer(fn),
                'accuracy':'accuracy', 'balanced_accuracy':'balanced_accuracy', 'precision': make_scorer(my_precision),
@@ -170,7 +186,7 @@ def analysis_GridSearch(X, y):
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description='Segment file')
+    parser = argparse.ArgumentParser(description='')
 
     parser.add_argument('--congresses_embedded', type=str, required=True, help='Directory containig the .csv files of '
                                                                                'the congressmen speeches embedded' )

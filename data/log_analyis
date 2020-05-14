@@ -1,0 +1,571 @@
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/bin/python /home/fla/Desktop/Research_Assistantship/congress_document_study/data/embedded_congress_analysis.py --congresses_embedded /home/fla/remote/leonhard-scratch/congresses_embedded
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_2.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 88.62 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.551 (std: 0.198)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': 3, 'max_features': 3, 'min_samples_leaf': 3, 'min_samples_split': 10}
+
+Model with rank: 2
+Mean validation score: 0.547 (std: 0.104)
+Parameters: {'bootstrap': True, 'criterion': 'entropy', 'max_depth': None, 'max_features': 3, 'min_samples_leaf': 10, 'min_samples_split': 10}
+
+Model with rank: 3
+Mean validation score: 0.539 (std: 0.136)
+Parameters: {'bootstrap': False, 'criterion': 'entropy', 'max_depth': 3, 'max_features': 1, 'min_samples_leaf': 1, 'min_samples_split': 3}
+
+Mean test_tp: 8.6
+Mean test_tn: 1.2
+Mean test_fp: 5.6
+Mean test_fn: 1.2
+Mean test_accuracy: 0.5890196078431372
+Mean test_balanced_accuracy: 0.5258730158730158
+Mean test_precision: 0.4583333333333333
+Mean test_recall: 0.4904761904761904
+Mean test_f1_score: 0.43829059829059835
+
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_15.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 130.53 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.614 (std: 0.130)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': None, 'max_features': 30, 'min_samples_leaf': 1, 'min_samples_split': 3}
+
+Model with rank: 2
+Mean validation score: 0.591 (std: 0.150)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': None, 'max_features': 10, 'min_samples_leaf': 3, 'min_samples_split': 3}
+
+Model with rank: 3
+Mean validation score: 0.575 (std: 0.156)
+Parameters: {'bootstrap': False, 'criterion': 'gini', 'max_depth': None, 'max_features': 1, 'min_samples_leaf': 1, 'min_samples_split': 3}
+
+Mean test_tp: 22.8
+Mean test_tn: 1.0
+Mean test_fp: 8.0
+Mean test_fn: 4.0
+Mean test_accuracy: 0.6652380952380953
+Mean test_balanced_accuracy: 0.4814814814814815
+Mean test_precision: 0.3223809523809523
+Mean test_recall: 0.3111111111111111
+Mean test_f1_score: 0.3008839601414336
+
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_7.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 111.90 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.583 (std: 0.071)
+Parameters: {'bootstrap': False, 'criterion': 'gini', 'max_depth': 3, 'max_features': 30, 'min_samples_leaf': 10, 'min_samples_split': 10}
+
+Model with rank: 2
+Mean validation score: 0.581 (std: 0.131)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': None, 'max_features': 20, 'min_samples_leaf': 3, 'min_samples_split': 3}
+
+Model with rank: 3
+Mean validation score: 0.565 (std: 0.120)
+Parameters: {'bootstrap': False, 'criterion': 'gini', 'max_depth': None, 'max_features': 10, 'min_samples_leaf': 3, 'min_samples_split': 10}
+
+Mean test_tp: 11.0
+Mean test_tn: 1.6
+Mean test_fp: 7.2
+Mean test_fn: 2.8
+Mean test_accuracy: 0.556935817805383
+Mean test_balanced_accuracy: 0.4877899877899877
+Mean test_precision: 0.6042260061919504
+Mean test_recall: 0.7978021978021979
+Mean test_f1_score: 0.686140101201771
+
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_16.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 103.94 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.574 (std: 0.159)
+Parameters: {'bootstrap': False, 'criterion': 'entropy', 'max_depth': 3, 'max_features': 30, 'min_samples_leaf': 1, 'min_samples_split': 10}
+
+Model with rank: 2
+Mean validation score: 0.564 (std: 0.150)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': None, 'max_features': 30, 'min_samples_leaf': 1, 'min_samples_split': 10}
+
+Model with rank: 3
+Mean validation score: 0.548 (std: 0.152)
+Parameters: {'bootstrap': False, 'criterion': 'gini', 'max_depth': None, 'max_features': 20, 'min_samples_leaf': 1, 'min_samples_split': 10}
+
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1437: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples.
+  'precision', 'predicted', average, warn_for)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1437: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no predicted samples.
+  'precision', 'predicted', average, warn_for)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1437: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples.
+  'precision', 'predicted', average, warn_for)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1437: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no predicted samples.
+  'precision', 'predicted', average, warn_for)
+Mean test_tp: 30.8
+Mean test_tn: 0.0
+Mean test_fp: 5.6
+Mean test_fn: 0.2
+Mean test_accuracy: 0.8417417417417419
+Mean test_balanced_accuracy: 0.4967741935483871
+Mean test_precision: 0.34444444444444444
+Mean test_recall: 0.4
+Mean test_f1_score: 0.3701492537313433
+
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_11.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 121.48 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.577 (std: 0.105)
+Parameters: {'bootstrap': True, 'criterion': 'entropy', 'max_depth': None, 'max_features': 30, 'min_samples_leaf': 3, 'min_samples_split': 3}
+
+Model with rank: 2
+Mean validation score: 0.565 (std: 0.105)
+Parameters: {'bootstrap': False, 'criterion': 'gini', 'max_depth': None, 'max_features': 20, 'min_samples_leaf': 3, 'min_samples_split': 10}
+
+Model with rank: 3
+Mean validation score: 0.564 (std: 0.080)
+Parameters: {'bootstrap': False, 'criterion': 'entropy', 'max_depth': None, 'max_features': 30, 'min_samples_leaf': 1, 'min_samples_split': 10}
+
+Mean test_tp: 17.6
+Mean test_tn: 1.0
+Mean test_fp: 8.2
+Mean test_fn: 3.0
+Mean test_accuracy: 0.6246347793845013
+Mean test_balanced_accuracy: 0.4807142857142857
+Mean test_precision: 0.2471428571428571
+Mean test_recall: 0.10666666666666666
+Mean test_f1_score: 0.14276311923370746
+
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_18.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1745: UserWarning: y_pred contains classes not in y_true
+  warnings.warn('y_pred contains classes not in y_true')
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1745: UserWarning: y_pred contains classes not in y_true
+  warnings.warn('y_pred contains classes not in y_true')
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1745: UserWarning: y_pred contains classes not in y_true
+  warnings.warn('y_pred contains classes not in y_true')
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1745: UserWarning: y_pred contains classes not in y_true
+  warnings.warn('y_pred contains classes not in y_true')
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1745: UserWarning: y_pred contains classes not in y_true
+  warnings.warn('y_pred contains classes not in y_true')
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1745: UserWarning: y_pred contains classes not in y_true
+  warnings.warn('y_pred contains classes not in y_true')
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1745: UserWarning: y_pred contains classes not in y_true
+  warnings.warn('y_pred contains classes not in y_true')
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1745: UserWarning: y_pred contains classes not in y_true
+  warnings.warn('y_pred contains classes not in y_true')
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1745: UserWarning: y_pred contains classes not in y_true
+  warnings.warn('y_pred contains classes not in y_true')
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1745: UserWarning: y_pred contains classes not in y_true
+  warnings.warn('y_pred contains classes not in y_true')
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1745: UserWarning: y_pred contains classes not in y_true
+  warnings.warn('y_pred contains classes not in y_true')
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1745: UserWarning: y_pred contains classes not in y_true
+  warnings.warn('y_pred contains classes not in y_true')
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1745: UserWarning: y_pred contains classes not in y_true
+  warnings.warn('y_pred contains classes not in y_true')
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1745: UserWarning: y_pred contains classes not in y_true
+  warnings.warn('y_pred contains classes not in y_true')
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1745: UserWarning: y_pred contains classes not in y_true
+  warnings.warn('y_pred contains classes not in y_true')
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1745: UserWarning: y_pred contains classes not in y_true
+  warnings.warn('y_pred contains classes not in y_true')
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 199.77 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.262 (std: 0.130)
+Parameters: {'bootstrap': False, 'criterion': 'gini', 'max_depth': 3, 'max_features': 30, 'min_samples_leaf': 1, 'min_samples_split': 10}
+
+Model with rank: 2
+Mean validation score: 0.258 (std: 0.095)
+Parameters: {'bootstrap': False, 'criterion': 'entropy', 'max_depth': None, 'max_features': 3, 'min_samples_leaf': 1, 'min_samples_split': 10}
+
+Model with rank: 3
+Mean validation score: 0.251 (std: 0.095)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': None, 'max_features': 10, 'min_samples_leaf': 1, 'min_samples_split': 3}
+
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_split.py:657: Warning: The least populated class in y has only 2 members, which is too few. The minimum number of members in any class cannot be less than n_splits=5.
+  % (min_groups, self.n_splits)), Warning)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1259: UserWarning: Note that pos_label (set to 8888) is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  % (pos_label, average), UserWarning)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1437: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples.
+  'precision', 'predicted', average, warn_for)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1259: UserWarning: Note that pos_label (set to 8888) is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  % (pos_label, average), UserWarning)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1259: UserWarning: Note that pos_label (set to 8888) is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  % (pos_label, average), UserWarning)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1437: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 in labels with no predicted samples.
+  'precision', 'predicted', average, warn_for)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1259: UserWarning: Note that pos_label (set to 8888) is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  % (pos_label, average), UserWarning)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1437: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples.
+  'precision', 'predicted', average, warn_for)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1259: UserWarning: Note that pos_label (set to 8888) is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  % (pos_label, average), UserWarning)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1259: UserWarning: Note that pos_label (set to 8888) is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  % (pos_label, average), UserWarning)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1437: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 in labels with no predicted samples.
+  'precision', 'predicted', average, warn_for)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1259: UserWarning: Note that pos_label (set to 8888) is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  % (pos_label, average), UserWarning)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1437: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples.
+  'precision', 'predicted', average, warn_for)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1259: UserWarning: Note that pos_label (set to 8888) is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  % (pos_label, average), UserWarning)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1259: UserWarning: Note that pos_label (set to 8888) is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  % (pos_label, average), UserWarning)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1437: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 in labels with no predicted samples.
+  'precision', 'predicted', average, warn_for)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1259: UserWarning: Note that pos_label (set to 7777) is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  % (pos_label, average), UserWarning)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1437: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples.
+  'precision', 'predicted', average, warn_for)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1259: UserWarning: Note that pos_label (set to 7777) is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  % (pos_label, average), UserWarning)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1259: UserWarning: Note that pos_label (set to 7777) is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  % (pos_label, average), UserWarning)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1437: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 in labels with no predicted samples.
+  'precision', 'predicted', average, warn_for)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1259: UserWarning: Note that pos_label (set to 7777) is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  % (pos_label, average), UserWarning)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1437: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples.
+  'precision', 'predicted', average, warn_for)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1259: UserWarning: Note that pos_label (set to 7777) is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  % (pos_label, average), UserWarning)
+Mean test_tp: 2.4
+Mean test_tn: 0.0
+Mean test_fp: 0.4
+Mean test_fn: 0.0
+Mean test_accuracy: 0.2839843511217067
+Mean test_balanced_accuracy: 0.14286528286528288
+Mean test_precision: 0.20434842970465567
+Mean test_recall: 0.2839843511217067
+Mean test_f1_score: 0.2199890822185889
+
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_5.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1259: UserWarning: Note that pos_label (set to 7777) is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  % (pos_label, average), UserWarning)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1437: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 in labels with no predicted samples.
+  'precision', 'predicted', average, warn_for)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 114.00 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.605 (std: 0.121)
+Parameters: {'bootstrap': False, 'criterion': 'gini', 'max_depth': None, 'max_features': 20, 'min_samples_leaf': 10, 'min_samples_split': 10}
+
+Model with rank: 2
+Mean validation score: 0.594 (std: 0.118)
+Parameters: {'bootstrap': True, 'criterion': 'entropy', 'max_depth': None, 'max_features': 30, 'min_samples_leaf': 3, 'min_samples_split': 3}
+
+Model with rank: 3
+Mean validation score: 0.579 (std: 0.191)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': None, 'max_features': 10, 'min_samples_leaf': 1, 'min_samples_split': 10}
+
+Mean test_tp: 2.4
+Mean test_tn: 10.8
+Mean test_fp: 3.2
+Mean test_fn: 7.0
+Mean test_accuracy: 0.5630434782608695
+Mean test_balanced_accuracy: 0.5123809523809524
+Mean test_precision: 0.4461904761904762
+Mean test_recall: 0.38476190476190475
+Mean test_f1_score: 0.39694570135746604
+
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_4.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 109.47 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.609 (std: 0.141)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': None, 'max_features': 20, 'min_samples_leaf': 10, 'min_samples_split': 3}
+
+Model with rank: 2
+Mean validation score: 0.604 (std: 0.074)
+Parameters: {'bootstrap': True, 'criterion': 'entropy', 'max_depth': None, 'max_features': 3, 'min_samples_leaf': 10, 'min_samples_split': 10}
+
+Model with rank: 3
+Mean validation score: 0.574 (std: 0.156)
+Parameters: {'bootstrap': False, 'criterion': 'gini', 'max_depth': 3, 'max_features': 10, 'min_samples_leaf': 3, 'min_samples_split': 10}
+
+Mean test_tp: 3.0
+Mean test_tn: 8.6
+Mean test_fp: 4.0
+Mean test_fn: 7.2
+Mean test_accuracy: 0.5086627140974966
+Mean test_balanced_accuracy: 0.48738927738927734
+Mean test_precision: 0.4121428571428571
+Mean test_recall: 0.2927272727272727
+Mean test_f1_score: 0.33793183940242766
+
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_10.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 117.40 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.570 (std: 0.099)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': None, 'max_features': 10, 'min_samples_leaf': 1, 'min_samples_split': 3}
+
+Model with rank: 2
+Mean validation score: 0.565 (std: 0.072)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': None, 'max_features': 30, 'min_samples_leaf': 1, 'min_samples_split': 10}
+
+Model with rank: 3
+Mean validation score: 0.556 (std: 0.175)
+Parameters: {'bootstrap': False, 'criterion': 'gini', 'max_depth': None, 'max_features': 30, 'min_samples_leaf': 3, 'min_samples_split': 3}
+
+Mean test_tp: 21.0
+Mean test_tn: 0.8
+Mean test_fp: 5.0
+Mean test_fn: 1.4
+Mean test_accuracy: 0.7732895457033387
+Mean test_balanced_accuracy: 0.5387747035573123
+Mean test_precision: 0.7468258178603006
+Mean test_recall: 0.7799736495388669
+Mean test_f1_score: 0.7425027870680044
+
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_13.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 135.13 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.597 (std: 0.135)
+Parameters: {'bootstrap': True, 'criterion': 'entropy', 'max_depth': None, 'max_features': 10, 'min_samples_leaf': 1, 'min_samples_split': 3}
+
+Model with rank: 2
+Mean validation score: 0.594 (std: 0.131)
+Parameters: {'bootstrap': False, 'criterion': 'gini', 'max_depth': None, 'max_features': 10, 'min_samples_leaf': 3, 'min_samples_split': 3}
+
+Model with rank: 3
+Mean validation score: 0.582 (std: 0.139)
+Parameters: {'bootstrap': False, 'criterion': 'entropy', 'max_depth': None, 'max_features': 10, 'min_samples_leaf': 1, 'min_samples_split': 3}
+
+Mean test_tp: 20.0
+Mean test_tn: 2.2
+Mean test_fp: 9.2
+Mean test_fn: 3.0
+Mean test_accuracy: 0.6452100840336135
+Mean test_balanced_accuracy: 0.532509881422925
+Mean test_precision: 0.6856388888888889
+Mean test_recall: 0.8695652173913043
+Mean test_f1_score: 0.765004002287021
+
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_8.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 113.36 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.573 (std: 0.116)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': None, 'max_features': 30, 'min_samples_leaf': 1, 'min_samples_split': 3}
+
+Model with rank: 2
+Mean validation score: 0.569 (std: 0.158)
+Parameters: {'bootstrap': True, 'criterion': 'entropy', 'max_depth': None, 'max_features': 3, 'min_samples_leaf': 1, 'min_samples_split': 3}
+
+Model with rank: 3
+Mean validation score: 0.541 (std: 0.139)
+Parameters: {'bootstrap': True, 'criterion': 'entropy', 'max_depth': None, 'max_features': 1, 'min_samples_leaf': 1, 'min_samples_split': 3}
+
+Mean test_tp: 18.2
+Mean test_tn: 0.2
+Mean test_fp: 6.6
+Mean test_fn: 1.2
+Mean test_accuracy: 0.7020968660968662
+Mean test_balanced_accuracy: 0.4832330827067669
+Mean test_precision: 0.29615384615384616
+Mean test_recall: 0.3794736842105263
+Mean test_f1_score: 0.33265925176946415
+
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_17.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 130.84 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.518 (std: 0.073)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': None, 'max_features': 30, 'min_samples_leaf': 1, 'min_samples_split': 10}
+
+Model with rank: 2
+Mean validation score: 0.514 (std: 0.051)
+Parameters: {'bootstrap': False, 'criterion': 'entropy', 'max_depth': None, 'max_features': 30, 'min_samples_leaf': 3, 'min_samples_split': 10}
+
+Model with rank: 3
+Mean validation score: 0.512 (std: 0.037)
+Parameters: {'bootstrap': True, 'criterion': 'entropy', 'max_depth': 3, 'max_features': 10, 'min_samples_leaf': 1, 'min_samples_split': 3}
+
+Model with rank: 3
+Mean validation score: 0.512 (std: 0.037)
+Parameters: {'bootstrap': False, 'criterion': 'gini', 'max_depth': None, 'max_features': 3, 'min_samples_leaf': 1, 'min_samples_split': 10}
+
+Mean test_tp: 28.8
+Mean test_tn: 0.2
+Mean test_fp: 6.2
+Mean test_fn: 1.2
+Mean test_accuracy: 0.7965465465465466
+Mean test_balanced_accuracy: 0.49428571428571433
+Mean test_precision: 0.8228427128427128
+Mean test_recall: 0.9600000000000002
+Mean test_f1_score: 0.885927405927406
+
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_12.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 123.78 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.592 (std: 0.074)
+Parameters: {'bootstrap': False, 'criterion': 'gini', 'max_depth': None, 'max_features': 20, 'min_samples_leaf': 1, 'min_samples_split': 3}
+
+Model with rank: 2
+Mean validation score: 0.576 (std: 0.101)
+Parameters: {'bootstrap': False, 'criterion': 'gini', 'max_depth': None, 'max_features': 1, 'min_samples_leaf': 1, 'min_samples_split': 3}
+
+Model with rank: 3
+Mean validation score: 0.575 (std: 0.074)
+Parameters: {'bootstrap': False, 'criterion': 'gini', 'max_depth': None, 'max_features': 20, 'min_samples_leaf': 1, 'min_samples_split': 10}
+
+Mean test_tp: 20.6
+Mean test_tn: 1.6
+Mean test_fp: 5.8
+Mean test_fn: 2.8
+Mean test_accuracy: 0.7208333333333334
+Mean test_balanced_accuracy: 0.5505693581780539
+Mean test_precision: 0.7821428571428571
+Mean test_recall: 0.8797101449275363
+Mean test_f1_score: 0.82722919318664
+
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_1.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 97.16 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.711 (std: 0.105)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': 3, 'max_features': 10, 'min_samples_leaf': 3, 'min_samples_split': 3}
+
+Model with rank: 2
+Mean validation score: 0.677 (std: 0.202)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': None, 'max_features': 30, 'min_samples_leaf': 3, 'min_samples_split': 3}
+
+Model with rank: 3
+Mean validation score: 0.632 (std: 0.202)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': None, 'max_features': 1, 'min_samples_leaf': 3, 'min_samples_split': 3}
+
+Mean test_tp: 6.8
+Mean test_tn: 1.6
+Mean test_fp: 4.0
+Mean test_fn: 1.2
+Mean test_accuracy: 0.6164835164835165
+Mean test_balanced_accuracy: 0.5683333333333334
+Mean test_precision: 0.6321212121212121
+Mean test_recall: 0.85
+Mean test_f1_score: 0.7229308565531476
+
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_9.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 105.49 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.542 (std: 0.086)
+Parameters: {'bootstrap': False, 'criterion': 'gini', 'max_depth': 3, 'max_features': 30, 'min_samples_leaf': 1, 'min_samples_split': 10}
+
+Model with rank: 2
+Mean validation score: 0.538 (std: 0.080)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': None, 'max_features': 30, 'min_samples_leaf': 3, 'min_samples_split': 3}
+
+Model with rank: 3
+Mean validation score: 0.538 (std: 0.110)
+Parameters: {'bootstrap': False, 'criterion': 'entropy', 'max_depth': None, 'max_features': 30, 'min_samples_leaf': 1, 'min_samples_split': 10}
+
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1437: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples.
+  'precision', 'predicted', average, warn_for)
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/metrics/classification.py:1437: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no predicted samples.
+  'precision', 'predicted', average, warn_for)
+Mean test_tp: 18.6
+Mean test_tn: 0.0
+Mean test_fp: 4.6
+Mean test_fn: 0.6
+Mean test_accuracy: 0.782072463768116
+Mean test_balanced_accuracy: 0.4844736842105263
+Mean test_precision: 0.31666666666666665
+Mean test_recall: 0.39
+Mean test_f1_score: 0.3494714587737843
+
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_14.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 135.79 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.540 (std: 0.057)
+Parameters: {'bootstrap': False, 'criterion': 'gini', 'max_depth': None, 'max_features': 3, 'min_samples_leaf': 1, 'min_samples_split': 3}
+
+Model with rank: 2
+Mean validation score: 0.535 (std: 0.102)
+Parameters: {'bootstrap': True, 'criterion': 'entropy', 'max_depth': None, 'max_features': 30, 'min_samples_leaf': 1, 'min_samples_split': 3}
+
+Model with rank: 3
+Mean validation score: 0.531 (std: 0.087)
+Parameters: {'bootstrap': False, 'criterion': 'entropy', 'max_depth': None, 'max_features': 10, 'min_samples_leaf': 1, 'min_samples_split': 10}
+
+Mean test_tp: 19.2
+Mean test_tn: 2.0
+Mean test_fp: 10.4
+Mean test_fn: 5.8
+Mean test_accuracy: 0.5668563300142248
+Mean test_balanced_accuracy: 0.4647692307692307
+Mean test_precision: 0.583248877353438
+Mean test_recall: 0.6307692307692307
+Mean test_f1_score: 0.5969485680011996
+
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_3.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 105.98 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.585 (std: 0.109)
+Parameters: {'bootstrap': False, 'criterion': 'entropy', 'max_depth': 3, 'max_features': 20, 'min_samples_leaf': 1, 'min_samples_split': 10}
+
+Model with rank: 2
+Mean validation score: 0.575 (std: 0.161)
+Parameters: {'bootstrap': True, 'criterion': 'entropy', 'max_depth': None, 'max_features': 3, 'min_samples_leaf': 3, 'min_samples_split': 3}
+
+Model with rank: 3
+Mean validation score: 0.574 (std: 0.094)
+Parameters: {'bootstrap': False, 'criterion': 'gini', 'max_depth': 3, 'max_features': 20, 'min_samples_leaf': 1, 'min_samples_split': 3}
+
+Mean test_tp: 3.0
+Mean test_tn: 6.2
+Mean test_fp: 5.2
+Mean test_fn: 7.2
+Mean test_accuracy: 0.4259175607001694
+Mean test_balanced_accuracy: 0.4201515151515151
+Mean test_precision: 0.3813852813852813
+Mean test_recall: 0.2996969696969697
+Mean test_f1_score: 0.333120952423685
+
+Analysis of congress file: /home/fla/remote/leonhard-scratch/congresses_embedded/embedded_congress_6.csv
+/home/fla/anaconda3/envs/Congress_Documents_Scraping/lib/python3.6/site-packages/sklearn/model_selection/_search.py:814: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
+GridSearchCV took 111.21 seconds for 240 candidate parameter settings.
+Model with rank: 1
+Mean validation score: 0.652 (std: 0.154)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': 3, 'max_features': 20, 'min_samples_leaf': 10, 'min_samples_split': 10}
+
+Model with rank: 2
+Mean validation score: 0.643 (std: 0.159)
+Parameters: {'bootstrap': False, 'criterion': 'entropy', 'max_depth': None, 'max_features': 30, 'min_samples_leaf': 10, 'min_samples_split': 3}
+
+Model with rank: 3
+Mean validation score: 0.627 (std: 0.135)
+Parameters: {'bootstrap': True, 'criterion': 'gini', 'max_depth': None, 'max_features': 10, 'min_samples_leaf': 10, 'min_samples_split': 10}
+
+Mean test_tp: 2.6
+Mean test_tn: 10.2
+Mean test_fp: 3.4
+Mean test_fn: 6.8
+Mean test_accuracy: 0.5558959156785244
+Mean test_balanced_accuracy: 0.5113919413919413
+Mean test_precision: 0.45
+Mean test_recall: 0.3219047619047619
+Mean test_f1_score: 0.3611127209504491
+
+
+Process finished with exit code 0
