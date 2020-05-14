@@ -24,7 +24,7 @@ There are five main steps before the final analysis.
 4- Speech segmentation
 5- Bigram analysis
 
-
+All the following commands must be run inside the directory "data"
 #### 1.1 DATASET CREATION
 The dataset can be found in the ./data directory, it is divided into three subdirectories.<br />
 1- "./data/1789to1824_DebatesAndProceedings" scraped from the link: "https://memory.loc.gov/ammem/amlaw/lwaclink.html"<br />
